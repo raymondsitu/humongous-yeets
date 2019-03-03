@@ -9,7 +9,11 @@
 
 ## To run MySQL
 `brew services start mysql` to start database  
-`brew services stop mysql` when done
+
+For the initial setup, you want to type `mysql -u root` into the terminal and create a database `CREATE DATABASE project` because the python server references this database.  
+
+`brew services stop mysql` when done  
+
 
 ## To run Python flask server
 `python3 server.py`  
