@@ -18,7 +18,7 @@ For the initial setup, you want to type `mysql -u root` into the terminal and cr
 ## To run Python flask server
 `python3 server.py`  
 To reach endpoints use `http://localhost:5000/`  
-`ctrl + c` to stop
+`ctrl + c` to stop  
 The frontend Angular client will use localhost:5000 in it's http requests to reach this server.
 
 ## Angular server
