@@ -19,9 +19,10 @@ For the initial setup, you want to type `mysql -u root` into the terminal and cr
 `python3 server.py`  
 To reach endpoints use `http://localhost:5000/`  
 `ctrl + c` to stop
+The frontend Angular client will use localhost:5000 in it's http requests to reach this server.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Angular server
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. Visiting this url will load the frontend. 
 
 ## Build
 
