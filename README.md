@@ -21,6 +21,11 @@ To reach endpoints use `http://localhost:5000/`
 `ctrl + c` to stop  
 The frontend Angular client will use localhost:5000 in it's http requests to reach this server.
 
+if you get this error  
+`sqlalchemy.exc.OperationalError: (MySQLdb._exceptions.OperationalError) (2002, "Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)") (Background on this error at: http://sqlalche.me/e/e3q8)`  
+it means your mysql server is not running. Check by typing `mysql -u root` into the command line. 
+
+
 ## Angular server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. Visiting this url will load the frontend. 
 

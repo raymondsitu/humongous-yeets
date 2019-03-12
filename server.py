@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from sqlalchemy import *
 
 app = Flask(__name__)
+CORS(app)
 
 engine = create_engine('mysql://root@localhost')
 connection = engine.connect()
