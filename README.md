@@ -2,8 +2,8 @@
 
 ## Dependencies
 `brew install mysql`  
-`pip install flask`  
-`pip install sqlalchemy`  
+`pip3 install flask`  
+`pip3 install sqlalchemy`  
 
 `npm install -g @angular/cli`
 
