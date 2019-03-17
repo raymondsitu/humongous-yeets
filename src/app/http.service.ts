@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, filter, scan } from 'rxjs/operators';
 
 const baseUrl = 'http://localhost:5000';
 

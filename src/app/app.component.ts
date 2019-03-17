@@ -7,9 +7,21 @@ import {HttpService} from './http.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'not poggers';
+  loggedin = false;
+  username: string;
+  password: string;
 
   constructor(private http: HttpService) {
-    http.getRequest('/', {}).then((res) => this.title = res['response'] );
+    http.getRequest('/', {}).then((res) => console.log(res['response']) );
+  }
+
+  // todo make http request
+  login(): void {
+    if (this.username === 'admin' && this.password === 'admin') {
+      this.loggedin = true;
+    } else {
+      alert('Invalid username or password');
+    }
+
   }
 }
