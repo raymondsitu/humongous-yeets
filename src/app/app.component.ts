@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
 import {HttpService} from './http.service';
+import {Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
+
 export class AppComponent {
   loggedin = false;
   username: string;

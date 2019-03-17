@@ -6,3 +6,7 @@ h1 {
 .login-card {
   margin: auto;
 }
+
+.mat-tab-label {
+  width: 15%;
+}

@@ -1,52 +1,82 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
 
-  <h1>
-    Humongous Yeets
+  <h1 style="padding-bottom: 5%">
+    Humongous
+  <span style="color: royalblue">
+    Yeets
+  </span>
   </h1>
 
-  <div *ngIf="!loggedin">
-    <mat-card class="login-card" style="width: 50%;">
+  <div *ngIf="!loggedin" style="text-align: center">
+    <mat-card class="login-card" style="width: 40%; background-color: #F5F5F5; padding-top: 2%">
 
       <mat-card-header style="display: inline-block;">
-        <mat-card-title>Login</mat-card-title>
+        <mat-card-title><b style="font-size: 25px;">Welcome</b></mat-card-title>
       </mat-card-header>
 
-      <mat-card-content style="margin: 0 auto; width: 40%;">
+      <mat-card-content>
         <form class="login">
-          <table class="example-full-width" cellspacing="0">
+          <table style="margin: auto" cellspacing="0">
             <tr>
               <td>
                 <mat-form-field class="username">
-                  <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+                  <input matInput placeholder="Username"
+                         [(ngModel)]="username" name="username"
+                         required
+                         style="font-size:18px;">
                 </mat-form-field>
               </td>
             </tr>
             <tr>
               <td>
                 <mat-form-field class="password">
-                  <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
+                  <input matInput placeholder="Password"
+                         (keydown.enter)="login()"
+                         [(ngModel)]="password"
+                         type="password"
+                         name="password"
+                         required style="
+                         font-size:18px">
                 </mat-form-field>
             </tr></table>
         </form>
       </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions style="padding-bottom:5%">
       <button mat-raised-button (click)="login()" color="primary">Login</button>
     </mat-card-actions>
 
     </mat-card>
   </div>
 
-  <div *ngIf="loggedin">
+  <div *ngIf="loggedin" style="padding-left:10%;padding-right:10%;">
     <mat-tab-group>
-      <mat-tab label="Browse">
+      <mat-tab style="width:20%">
+        <ng-template mat-tab-label>
+          <span style="padding-right: 10px; font-size: 18px">
+            Browse Restaurants
+          </span>
+          <mat-icon> fastfood </mat-icon>
+        </ng-template>
         <app-browse></app-browse>
       </mat-tab>
-      <mat-tab label="Order">
+      <mat-tab class="nav-tab">
+        <ng-template mat-tab-label>
+          <span style="padding-right: 10px; font-size: 18px">
+            Previous Orders
+          </span>
+          <mat-icon> history </mat-icon>
+        </ng-template>
         <app-orders></app-orders>
       </mat-tab>
-      <mat-tab label="Account">
+      <mat-tab class="nav-tab">
+        <ng-template mat-tab-label>
+          <span style="padding-right: 10px; font-size: 18px">
+            My Account
+          </span>
+          <mat-icon> person_pin </mat-icon>
+        </ng-template>
         <app-account></app-account>
       </mat-tab>
     </mat-tab-group>
