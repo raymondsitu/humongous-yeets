@@ -4,8 +4,7 @@
 `brew install mysql`  
 `pip3 install flask`  
 `pip3 install sqlalchemy`  
-
-`npm install -g @angular/cli`
+`npm install`
 
 ## To run MySQL
 `brew services start mysql` to start database  
