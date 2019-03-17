@@ -10,12 +10,12 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  getRequest(url: string, param: any): any {
+  getRequest(url: string, param: any): Promise<any> {
     const params = new HttpParams(param);
-    return this.http.get(url, {params: params}).subscribe((res) => res );
+    return this.http.get(url, {params: params}).toPromise();
   }
 
-  postRequest(url: string, param: any): any {
-    return this.http.post(url, param).subscribe((res) => res);
+  postRequest(url: string, param: any): Promise<any> {
+    return this.http.post(url, param).toPromise();
   }
 }
