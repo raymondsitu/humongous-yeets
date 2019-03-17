@@ -17,13 +17,21 @@ export class AppComponent {
     http.getRequest('/', {}).then((res) => console.log(res['response']) );
   }
 
-  // todo make http request
   login(): void {
+    // todo remove this when we deploy to production
     if (this.username === 'admin' && this.password === 'admin') {
       this.loggedin = true;
-    } else {
-      alert('Invalid username or password');
+      return;
     }
-
+    this.http.getRequest(
+      '/getCustomer', { 'CustomerUsername' : this.username, 'CustomerPassword': this.password }
+      ).then((res) => {
+        if (res.response === 'Customer not found') {
+          alert('Invalid username or password');
+        } else {
+          this.loggedin = true;
+          return;
+        }
+    }).catch((e) => alert('Encounter error: ' + e.message));
   }
 }

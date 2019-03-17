@@ -36,7 +36,7 @@ def getCustomer():
     try:
         result = engine.execute(query)
         if result.rowcount == 0:
-            return "Customer not found"
+            return jsonify({"response": "Customer not found"})
         row = result.first()
         customer = dict(row)
         response.append(customer)
