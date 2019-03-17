@@ -11,7 +11,7 @@ engine.execute('USE project')
 
 @app.route("/")
 def hello():
-    return "poggers"
+    return jsonify({"response": "poggers"})
 
 # Returns all customers in the DB
 @app.route("/getCustomers")
