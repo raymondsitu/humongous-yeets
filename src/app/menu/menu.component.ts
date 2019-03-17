@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CartService} from '../cart.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  selectedItems: any[] = [];
+
+  constructor(private cartService: CartService) {
+  }
 
   ngOnInit() {
+    this.selectedItems = this.cartService.getSelectedItems();
   }
+
+  // to add/remove items to cart use cartService
 
 }

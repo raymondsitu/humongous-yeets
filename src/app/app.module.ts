@@ -13,6 +13,8 @@ import {
   MatButtonModule, MatCardModule, MatDialogModule, MatTableModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule
 } from '@angular/material';
+import { CheckoutComponent } from './checkout/checkout.component';
+import {CartService} from './cart.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import {
     MenuComponent,
     AccountComponent,
     BrowseComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,9 +39,8 @@ import {
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
-    MatIconModule
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
