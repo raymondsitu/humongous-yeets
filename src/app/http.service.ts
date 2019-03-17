@@ -3,6 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, filter, scan } from 'rxjs/operators';
 
+const baseUrl = 'http://localhost:5000';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,10 +14,10 @@ export class HttpService {
 
   getRequest(url: string, param: any): Promise<any> {
     const params = new HttpParams(param);
-    return this.http.get(url, {params: params}).toPromise();
+    return this.http.get(baseUrl + url, {params: params}).toPromise();
   }
 
   postRequest(url: string, param: any): Promise<any> {
-    return this.http.post(url, param).toPromise();
+    return this.http.post(baseUrl + url, param).toPromise();
   }
 }
