@@ -1,3 +1,37 @@
-<p>
-  browse works!
-</p>
+<mat-form-field class="restaurantName">
+  <input matInput placeholder="Restaurant name..."
+         (keydown.enter)="searchRestaurants()"
+         [(ngModel)]="restaurantName" name="restaurantName"
+         required
+         style="font-size:18px;">
+</mat-form-field>
+
+<mat-table [dataSource]="restaurants">
+  <ng-container matColumnDef="Name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Name }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Location">
+    <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Location }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Category">
+    <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Category }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Rating">
+    <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Rating }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="DeliveryFee">
+    <mat-header-cell *matHeaderCellDef>DeliveryFee</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.DeliveryFee }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
