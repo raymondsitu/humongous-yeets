@@ -115,10 +115,33 @@ def getMenus():
         return "No menus found"
     for row in result:
         menu = dict(row)
-        menu['TimeFrom'] = str(menu['TimeFrom'])
-        menu['TimeTo'] = str(menu['TimeTo'])
         response.append(menu)
     return jsonify(response)
+
+@app.route("/getMenu")
+def getMenu():
+  try:
+    restaurantID = request.args.get('RestaurantID')
+    query = 'SELECT * FROM Menu WHERE RestaurantID = {}'.format(restaurantID)
+    response = []
+    result = engine.execute(query)
+    if result.rowcount == 0:
+      return "Menu not found"
+    row = result.first()
+    menu = dict(row)
+
+    menuItemsQuery = 'SELECT * FROM MenuItem WHERE MenuID = {}'.format(menu['MenuID'])
+    menuItemsResult = engine.execute(menuItemsQuery)
+    menuItems = []
+    for itemRow in menuItemsResult:
+      menuItem = dict(itemRow)
+      menuItems.append(menuItem)
+
+    menu['MenuItems'] = menuItems
+    response.append(menu)
+    return jsonify(response)
+  except Exception as e:
+    return "Exception thrown"
 
 # Get all menu items in the DB
 @app.route("/getMenuItems")

@@ -94,8 +94,6 @@ FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
 create table Menu (
 	MenuID integer,
 	Name char(30),
-	TimeFrom TIME,
-	TimeTo TIME,
 	RestaurantID integer NOT NULL,
 	PRIMARY KEY (MenuID),
 FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
@@ -171,11 +169,11 @@ INSERT INTO Restaurant VALUES (3, "FreshSlice", "688 Dunsmuir Street Vancouver, 
 INSERT INTO Restaurant VALUES (4, "Santouka", "558 W Broadway, Vancouver, BC V5Z 1E9", "Ramen", 4.6, 3.00);
 INSERT INTO Restaurant VALUES (5, "Uncle Fatih", "6045 University BLVD Vancouver, BC V6T 1Z1", "Pizza", 3.9, 2.25);
 
-INSERT INTO Menu VALUES (1, "Lunch and Dinner", TIME("11:00"), TIME("6:00"), 1);
-INSERT INTO Menu VALUES (2, "Lunch", TIME("11:00"), TIME("15:00"), 2);
-INSERT INTO Menu VALUES (3, "Happy Hour", TIME("16:00"), TIME("18:00"), 3);
-INSERT INTO Menu VALUES (4, "Dinner", TIME("16:00"), TIME("20:00"), 4);
-INSERT INTO Menu VALUES (5, "All Day", TIME("9:00"), TIME("22:00"), 5);
+INSERT INTO Menu VALUES (1, "McDonalds Menu", 1);
+INSERT INTO Menu VALUES (2, "Miku Menu", 2);
+INSERT INTO Menu VALUES (3, "FreshSlice Menu", 3);
+INSERT INTO Menu VALUES (4, "Santouka Menu", 4);
+INSERT INTO Menu VALUES (5, "Uncle Fatih Menu", 5);
 
 
 INSERT INTO RestaurantOrder VALUES (1, "2019-02-10", TIME("11:10"), 10.00, 4, 1.00, "delivered", "2329 West Mall, Vancouver, BC V6T 1Z4", "rsitu","4324-0987-1234-8765","Kristy Kong", "2053 Main Mall, Vancouver, BC V6T 1Z2", 1);
