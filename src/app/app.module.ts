@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatTableModule,
-  MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule
+  MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule, MatSortModule
 } from '@angular/material';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {CartService} from './cart.service';
@@ -36,6 +36,7 @@ import {CartService} from './cart.service';
     MatCardModule,
     MatButtonModule,
     MatTableModule,
+    MatSortModule,
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
