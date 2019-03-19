@@ -11,7 +11,7 @@ export class BrowseComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   restaurantName: string;
-  restaurants: MatTableDataSource;
+  restaurants: MatTableDataSource<any[]>;
   displayedColumns = ['Name', 'Location', 'Category', 'Rating', 'DeliveryFee'];
 
   constructor(private http: HttpService) {
@@ -28,5 +28,9 @@ export class BrowseComponent implements OnInit {
     }).catch((response) => {
       alert('No restaurants found');
     })
+  }
+
+  ngOnInit() {
+
   }
 }
