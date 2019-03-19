@@ -9,7 +9,7 @@ import {CartService} from '../cart.service';
 export class CheckoutComponent implements OnInit {
 
   public selectedItems: any[] = [];
-  public displayedColumns = ['item', 'quantity', 'cost'];
+  public displayedColumns = ['item', 'quantity', 'price'];
 
   constructor(private cartService: CartService) {
   }

@@ -30,6 +30,10 @@ export class BrowseComponent implements OnInit {
     })
   }
 
+  selectRestaurant(row: any) {
+    // TODO: launch menu component when restaurant is selected with given row
+  }
+
   ngOnInit() {
 
   }
