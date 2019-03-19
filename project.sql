@@ -1,6 +1,7 @@
 create database project;
 use project;
 
+
 create table Customer (
   	CustomerUsername char(30),
   	CustomerPassword char(30),
@@ -100,23 +101,16 @@ create table Menu (
 FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
 );
 
-create table MenuCategory (
-	MenuCategoryID integer,
-	Name char(30),
-	MenuID integer NOT NULL,
-	PRIMARY KEY (MenuCategoryID),
-	FOREIGN KEY (MenuID) REFERENCES Menu(MenuID)
-);
 create table MenuItem (
   	MenuItemID integer,
 	Name char(30),
-  	MenuCategoryID integer NOT NULL,
+  	MenuID integer NOT NULL,
 	Price REAL,
 	Calories integer,
 	Description char(100),
 	Rating integer,
 	PRIMARY KEY (MenuItemID),
-	FOREIGN KEY (MenuCategoryID) REFERENCES	MenuCategory(MenuCategoryID) ON DELETE CASCADE
+	FOREIGN KEY (MenuID) REFERENCES	Menu(MenuID) ON DELETE CASCADE
 );
 
 create table OrderedMenuItem (
@@ -183,11 +177,6 @@ INSERT INTO Menu VALUES (3, "Happy Hour", TIME("16:00"), TIME("18:00"), 3);
 INSERT INTO Menu VALUES (4, "Dinner", TIME("16:00"), TIME("20:00"), 4);
 INSERT INTO Menu VALUES (5, "All Day", TIME("9:00"), TIME("22:00"), 5);
 
-INSERT INTO MenuCategory VALUES (1,"Burgers",1);
-INSERT INTO MenuCategory VALUES (2,"Appetiziers",2);
-INSERT INTO MenuCategory VALUES (3,"Entree",3);
-INSERT INTO MenuCategory VALUES (4,"Entree",4);
-INSERT INTO MenuCategory VALUES (5,"Entree",5);
 
 INSERT INTO RestaurantOrder VALUES (1, "2019-02-10", TIME("11:10"), 10.00, 4, 1.00, "delivered", "2329 West Mall, Vancouver, BC V6T 1Z4", "rsitu","4324-0987-1234-8765","Kristy Kong", "2053 Main Mall, Vancouver, BC V6T 1Z2", 1);
 INSERT INTO RestaurantOrder VALUES (2, "2019-02-15", TIME("11:12"), 22.25, 14, 1.00, "delivered", "2330 West Mall, Vancouver, BC V6T 1Z4", "kwong","1111-9898-7676-5252","Sharpe Velleman", "2053 West Mall, Vancouver, BC V6T 1Z2", 2);

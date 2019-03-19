@@ -120,19 +120,6 @@ def getMenus():
         response.append(menu)
     return jsonify(response)
 
-# Get all menu categories in the DB
-@app.route("/getMenuCategories")
-def getMenuCategories():
-    query = 'SELECT * FROM MenuCategory'
-    response = []
-    result = engine.execute(query)
-    if result.rowcount == 0:
-        return "No menu categories found"
-    for row in result:
-        menuCategory = dict(row)
-        response.append(menuCategory)
-    return jsonify(response)
-
 # Get all menu items in the DB
 @app.route("/getMenuItems")
 def getMenuItems():
