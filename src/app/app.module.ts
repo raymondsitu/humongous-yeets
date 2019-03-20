@@ -11,7 +11,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatTableModule,
-  MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule, MatSortModule
+  MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule, MatSortModule,
+  MatSelectModule
 } from '@angular/material';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {CartService} from './cart.service';
@@ -40,6 +41,7 @@ import {CartService} from './cart.service';
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
+    MatSelectModule
   ],
   providers: [CartService],
   bootstrap: [AppComponent]

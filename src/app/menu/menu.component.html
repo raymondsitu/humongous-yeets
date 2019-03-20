@@ -1,3 +1,46 @@
-<p>
-  menu works!
-</p>
+<button mat-button (click)="goBack()">
+  <mat-icon> arrow_back </mat-icon>
+  <mat-icon> arrow_back </mat-icon>
+  <mat-icon> arrow_back </mat-icon>
+</button>
+<mat-table [dataSource]="menuItems" matSort matSortActive="Rating" matSortDirection="desc">
+  <ng-container matColumnDef="Name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Name }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Description">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Description }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Calories">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Calories }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Rating">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Rating }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Price">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.Price }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Quantity">
+    <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+    <mat-cell *matCellDef="let element; let row;">
+      <mat-form-field class="rowQuantity">
+        <input type="number" matInput placeholder="Enter quantity..."
+               #quantity>
+      </mat-form-field>
+      <button mat-raised-button (click)="addToCart(row, quantity.value)">Add to cart</button>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

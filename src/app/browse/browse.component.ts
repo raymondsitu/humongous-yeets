@@ -13,6 +13,8 @@ export class BrowseComponent implements OnInit {
   restaurantName: string;
   restaurants: MatTableDataSource<any[]>;
   displayedColumns = ['Name', 'Location', 'Category', 'Rating', 'DeliveryFee'];
+  restaurantSelected = false;
+  selectedRestaurantID = undefined;
 
   constructor(private http: HttpService) {
     http.getRequest('/getRestaurants', {}).then((restaurants) => {
@@ -32,6 +34,12 @@ export class BrowseComponent implements OnInit {
 
   selectRestaurant(row: any) {
     // TODO: launch menu component when restaurant is selected with given row
+    this.selectedRestaurantID = row['RestaurantID'];
+    this.restaurantSelected = true;
+  }
+
+  disableMenu() {
+    this.restaurantSelected = false;
   }
 
   ngOnInit() {

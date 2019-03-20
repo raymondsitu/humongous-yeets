@@ -1,0 +1,11 @@
+.mat-button {
+  width: 100%;
+}
+
+.mat-cell {
+  position: relative;
+}
+
+.mat-column-Quantity {
+  flex-direction: column;
+}
