@@ -16,6 +16,9 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.selectedItems = this.cartService.getSelectedItems();
+    this.cartService.cartUpdated.subscribe((cart) => {
+      this.selectedItems = this.cartService.getSelectedItems();
+    });
   }
 
   getTotalCost(): number {
