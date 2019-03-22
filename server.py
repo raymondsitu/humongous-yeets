@@ -185,6 +185,25 @@ def getMOrderedenuItems():
         response.append(orderedMenuItem)
     return jsonify(response)
 
+#Get array of all menu categories that belong ot this specific menu
+@app.route("/getOrdersBetween")
+def getOrdersBetween():
+  customerUsername = request.args.get('CustomerUsername')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT * FROM RestaurantOrder WHERE CustomerUsername = "{}" AND Date >= "{}" AND Date <= "{}"'.format(customerUsername, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return "No orders found between these dates"
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['Date'] = str(ordersBetween['Date'])
+      ordersBetween['Time'] = str(ordersBetween['Time'])
+      response.append(ordersBetween)
+  return jsonify(response)
+
 # Given all the fields in a POST form, create a new customer
 @app.route("/addCustomer", methods=["POST"])
 def addCustomer():
@@ -200,5 +219,40 @@ def addCustomer():
         return "Error in backend database"
     return 'Successfully added {} {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
 
+# Update a customer's information
+@app.route("/updateCustomer", methods=["PUT"])
+def updateCustomer():
+    params = request.get_json()
+    customerUsername = params['CustomerUsername']
+    customerPassword = params['CustomerPassword']
+    emailAddress = params['EmailAddress']
+    phoneNumber = params['PhoneNumber']
+    address = params['Address']
+    query = 'UPDATE Customer SET CustomerPassword = "{}", EmailAddress = "{}", PhoneNumber = "{}", Address = "{}" WHERE CustomerUsername = "{}";'.format(customerPassword, emailAddress, phoneNumber, address, customerUsername)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return "Error in backend database"
+    return 'Successfully updated Customer {} with {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
+
+#Update a restaurant's information
+@app.route("/updateRestaurant", methods=["PUT"])
+def updateRestaurant():
+    params = request.get_json()
+    restaurantID = params['RestaurantID'] #int
+    name = params["Name"]
+    location = params["Location"]
+    category = params["Category"]
+    rating = params["Rating"] #int
+    deliveryFee = params["DeliveryFee"] #real
+    restaurantPassword = params["RestaurantPassword"] #int
+    query = 'UPDATE Restaurant SET Name = "{}", Location = "{}", Category = "{}", Rating = {}, DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, rating, deliveryFee, restaurantPassword, restaurantID)
+    print(query)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return "Error in backend database"
+    return 'Successfully updated Restaurant {} with {} {} {} {} {} {}'.format(restaurantID, name, location, category, rating, deliveryFee, restaurantPassword)
 if __name__ == '__main__':
     app.run(debug=True)
+

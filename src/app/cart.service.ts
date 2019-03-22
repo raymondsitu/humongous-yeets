@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  private selectedItems: { [key: number] : any} = {};
-
+  private selectedItems: { [key: number]: any} = {};
+  cartUpdated: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   // add or update item
@@ -23,11 +23,13 @@ export class CartService {
       item['Quantity'] = quantity;
       this.selectedItems[key] = item;
     }
-    }
+    this.cartUpdated.emit(this.getSelectedItems());
+  }
 
   // remove item from cart completely
   removeItem(itemID: number): void {
     delete this.selectedItems[itemID];
+    this.cartUpdated.emit(this.getSelectedItems());
   }
 
   getSelectedItems(): any[] {
