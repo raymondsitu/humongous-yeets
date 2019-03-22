@@ -18,6 +18,10 @@ export class HttpService {
 
   postRequest(url: string, body: any): Promise<any> {
     const formParam = new HttpParams({fromObject: body});
-    return this.http.post(baseUrl + url, {body: formParam}).toPromise();
+    return this.http.post(baseUrl + url, body).toPromise();
+  }
+
+  putRequest(url: string, body: any): Promise<any> {
+    return this.http.put(baseUrl + url, body).toPromise()
   }
 }

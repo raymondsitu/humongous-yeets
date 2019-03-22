@@ -24,6 +24,14 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  updateAccount() {
+    this.http.putRequest('/updateCustomer', this.user).then((res) => {
+      alert('Updated');
+    }).catch((res) => {
+      alert('Error occured, try again later');
+    })
+  }
+
   getCustomerUsername() {
     if (this.usertype == 'customer') {
       return this.user['CustomerUsername'];
