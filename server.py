@@ -185,6 +185,25 @@ def getMOrderedenuItems():
         response.append(orderedMenuItem)
     return jsonify(response)
 
+#Get array of all menu categories that belong ot this specific menu
+@app.route("/getOrdersBetween")
+def getOrdersBetween():
+  customerUsername = request.args.get('CustomerUsername')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT * FROM RestaurantOrder WHERE CustomerUsername = "{}" AND Date >= "{}" AND Date <= "{}"'.format(customerUsername, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return "No orders found between these dates"
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['Date'] = str(ordersBetween['Date'])
+      ordersBetween['Time'] = str(ordersBetween['Time'])
+      response.append(ordersBetween)
+  return jsonify(response)
+
 # Given all the fields in a POST form, create a new customer
 @app.route("/addCustomer", methods=["POST"])
 def addCustomer():
@@ -202,3 +221,4 @@ def addCustomer():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
