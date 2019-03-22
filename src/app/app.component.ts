@@ -1,5 +1,6 @@
 import {HttpService} from './http.service';
 import {Component, ViewEncapsulation} from '@angular/core';
+import {UserService} from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,9 @@ export class AppComponent {
   password: string;
   usertype: string;
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpService,
+              private userService: UserService) {
+
     http.getRequest('/', {}).then((res) => console.log(res['response']) );
   }
 
@@ -22,6 +25,7 @@ export class AppComponent {
     // todo remove this when we deploy to production
     if (this.username === 'admin' && this.password === 'admin') {
       this.loggedin = true;
+      this.userService.setUsertype('admin');
       return;
     }
     this.http.getRequest(
@@ -33,7 +37,8 @@ export class AppComponent {
         } else {
           this.loggedin = true;
           this.usertype = res[0];
-          return;
+          this.userService.setUsertype(res[0]);
+          this.userService.setUser(res[1]);
         }
     }).catch((e) => alert('Encounter error: ' + e.message));
   }

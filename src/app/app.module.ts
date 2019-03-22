@@ -16,6 +16,7 @@ import {
 } from '@angular/material';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {CartService} from './cart.service';
+import {UserService} from './user.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {CartService} from './cart.service';
     MatIconModule,
     MatSelectModule
   ],
-  providers: [CartService],
+  providers: [CartService,
+    UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,37 @@
-<p>
-  account works!
-</p>
+<div *ngIf="usertype == 'customer'">
+
+    <div id="myAccount">
+      <mat-card id="myAccountCard" >
+
+        <mat-card-title>Hello, {{ username }}</mat-card-title>
+        <mat-form-field class="password">
+          <input matInput placeholder="Password"
+                 [(ngModel)]="user['CustomerPassword']"
+                 type="password"
+                 name="password">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Enter new email address"
+                 [(ngModel)]="user['EmailAddress']" name="emailAddress"
+                 style="font-size:18px;">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Enter new phone number"
+                 [(ngModel)]="user['PhoneNumber']" name="phoneNumber"
+                 style="font-size:18px;">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Enter new address"
+                 [(ngModel)]="user['Address']" name="address"
+                 style="font-size:18px;">
+        </mat-form-field>
+      </mat-card>
+    </div>
+</div>
+
+
+<div *ngIf="usertype == 'restaurant'">
+  <div id="myRestaurant">
+
+  </div>
+</div>
