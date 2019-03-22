@@ -219,6 +219,22 @@ def addCustomer():
         return "Error in backend database"
     return 'Successfully added {} {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
 
+# Update a customer's information
+@app.route("/updateCustomer", methods=["PUT"])
+def updateCustomer():
+    params = request.get_json()
+    customerUsername = params['CustomerUsername']
+    customerPassword = params['CustomerPassword']
+    emailAddress = params['EmailAddress']
+    phoneNumber = params['PhoneNumber']
+    address = params['Address']
+    query = 'UPDATE Customer SET CustomerPassword = "{}", EmailAddress = "{}", PhoneNumber = "{}", Address = "{}" WHERE CustomerUsername = "{}";'.format(customerPassword, emailAddress, phoneNumber, address, customerUsername)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return "Error in backend database"
+    return 'Successfully updated Customer {} with {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
