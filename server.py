@@ -204,20 +204,43 @@ def getOrdersBetween():
       response.append(ordersBetween)
   return jsonify(response)
 
+# ====================================== POST endpoints ====================================
+
 # Given all the fields in a POST form, create a new customer
 @app.route("/addCustomer", methods=["POST"])
 def addCustomer():
-    customerUsername = request.form['CustomerUsername']
-    customerPassword = request.form['CustomerPassword']
-    emailAddress = request.form['EmailAddress']
-    phoneNumber = request.form['PhoneNumber']
+    params = request.get_json()
+    customerUsername = params['CustomerUsername']
+    customerPassword = params['CustomerPassword']
+    emailAddress = params['EmailAddress']
+    phoneNumber = params['PhoneNumber']
     address = request.form['Address']
     query = 'INSERT INTO Customer VALUES ("{}", "{}", "{}", "{}", "{}");'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
     try:
         result = engine.execute(query)
     except Exception as e:
-        return "Error in backend database"
-    return 'Successfully added {} {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
+        return jsonify("addCustomer: Error in backend database")
+    return jsonify('Successfully added {} {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address))
+
+# Creates a MenuItem
+@app.route("/addMenuItem", methods=["POST"])
+def addMenuItem():
+    params = request.get_json()
+    menuItemID = params['MenuItemID'] #int
+    name = params['Name']
+    menuID = params['MenuID'] #int
+    price = params['Price'] #real
+    calories = params['Calories'] #int
+    description = params['Description']
+    rating = params['Rating'] #int
+    query = 'INSERT INTO MenuItem VALUES ({}, "{}", {}, "{}", {}, {}, "{}", {})'.format(menuItemID, name, menuID, price, calories, description, rating)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return jsonify("addMenuItem: Error in backend database")
+    return jsonify('Successfully added {} {} {} {} {} {} {} {})'.format(menuItemID, name, menuID, price, calories, description, rating))
+
+# ==================================== PUT endpoints =======================================
 
 # Update a customer's information
 @app.route("/updateCustomer", methods=["PUT"])
@@ -232,8 +255,8 @@ def updateCustomer():
     try:
         result = engine.execute(query)
     except Exception as e:
-        return "Error in backend database"
-    return 'Successfully updated Customer {} with {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
+        return jsonify("Error in backend database")
+    return jsonify('Successfully updated Customer {} with {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address))
 
 #Update a restaurant's information
 @app.route("/updateRestaurant", methods=["PUT"])
@@ -251,8 +274,8 @@ def updateRestaurant():
     try:
         result = engine.execute(query)
     except Exception as e:
-        return "Error in backend database"
-    return 'Successfully updated Restaurant {} with {} {} {} {} {} {}'.format(restaurantID, name, location, category, rating, deliveryFee, restaurantPassword)
+        return jsonify("Error in backend database")
+    return jsonify('Successfully updated Restaurant {} with {} {} {} {} {} {}'.format(restaurantID, name, location, category, rating, deliveryFee, restaurantPassword))
 if __name__ == '__main__':
     app.run(debug=True)
 
