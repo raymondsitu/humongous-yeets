@@ -25,7 +25,7 @@ export class CartService {
   }
 
   getTotalCost(): number {
-    const prices = this.getSelectedItems().map((item) => item['Price']);
+    const prices = this.getSelectedItems().map((item) => item['Price'] * item['quantity']);
     return prices.reduce((a, b) => a + b, 0);
   }
 }

@@ -1,10 +1,10 @@
+drop database if exists project;
 create database project;
 use project;
 
-
 create table Customer (
-  	CustomerUsername char(30),
-  	CustomerPassword char(30),
+  CustomerUsername char(30),
+  CustomerPassword char(30),
 	EmailAddress char(30),
 	PhoneNumber char(20),
 	Address char(50),
@@ -28,6 +28,7 @@ create table Restaurant (
 	Category char(30),
 	Rating integer,
 	DeliveryFee REAL,
+	RestaurantPassword integer(6),
 	PRIMARY KEY (RestaurantID)
 );
 
@@ -163,11 +164,11 @@ INSERT INTO Driver VALUES ("Mark Zuckerberg", "2353 East Mall, Vancouver, BC V6T
 INSERT INTO Driver VALUES ("Spongebob Squarepants", "2153 Pineapple, Bikini Bottom, BC V6T 1Z2", "333333", "Spongebob123");
 INSERT INTO Driver VALUES ("Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", "444444", "Patrick123");
 
-INSERT INTO Restaurant VALUES (1, "McDonalds", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "Fast Food", 3.4, 3.25);
-INSERT INTO Restaurant VALUES (2, "Miku", "200 Granville St #70, Vancouver, BC V6C 1S4", "Sushi", 4.5, 4.25);
-INSERT INTO Restaurant VALUES (3, "FreshSlice", "688 Dunsmuir Street Vancouver, British Columbia V6B 1N3", "Pizza", 4.2, 4.00);
-INSERT INTO Restaurant VALUES (4, "Santouka", "558 W Broadway, Vancouver, BC V5Z 1E9", "Ramen", 4.6, 3.00);
-INSERT INTO Restaurant VALUES (5, "Uncle Fatih", "6045 University BLVD Vancouver, BC V6T 1Z1", "Pizza", 3.9, 2.25);
+INSERT INTO Restaurant VALUES (1, "McDonalds", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "Fast Food", 3.4, 3.25, 123456);
+INSERT INTO Restaurant VALUES (2, "Miku", "200 Granville St #70, Vancouver, BC V6C 1S4", "Sushi", 4.5, 4.25, 123456);
+INSERT INTO Restaurant VALUES (3, "FreshSlice", "688 Dunsmuir Street Vancouver, British Columbia V6B 1N3", "Pizza", 4.2, 4.00, 123456);
+INSERT INTO Restaurant VALUES (4, "Santouka", "558 W Broadway, Vancouver, BC V5Z 1E9", "Ramen", 4.6, 3.00, 123456);
+INSERT INTO Restaurant VALUES (5, "Uncle Fatih", "6045 University BLVD Vancouver, BC V6T 1Z1", "Pizza", 3.9, 2.25, 123456);
 
 INSERT INTO Menu VALUES (1, "McDonalds Menu", 1);
 INSERT INTO Menu VALUES (2, "Miku Menu", 2);

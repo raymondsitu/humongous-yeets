@@ -12,6 +12,7 @@ export class AppComponent {
   loggedin = false;
   username: string;
   password: string;
+  usertype: string;
 
   constructor(private http: HttpService) {
     http.getRequest('/', {}).then((res) => console.log(res['response']) );
@@ -24,12 +25,14 @@ export class AppComponent {
       return;
     }
     this.http.getRequest(
-      '/getCustomer', { 'CustomerUsername' : this.username, 'CustomerPassword': this.password }
+      '/login', { 'username' : this.username, 'password': this.password }
       ).then((res) => {
-        if (res.response === 'Customer not found') {
+        console.log(res);
+        if (res.response === 'not found') {
           alert('Invalid username or password');
         } else {
           this.loggedin = true;
+          this.usertype = res[0];
           return;
         }
     }).catch((e) => alert('Encounter error: ' + e.message));

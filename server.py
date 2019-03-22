@@ -7,7 +7,8 @@ CORS(app)
 
 engine = create_engine('mysql://root@localhost')
 connection = engine.connect()
-engine.execute('USE project')
+engine.execute('use project')
+print('db set!')
 
 @app.route("/")
 def hello():
@@ -27,22 +28,35 @@ def getCustomers():
     return jsonify(response)
 
 # Given a username and password as arguments in a get request, gets a single customer object
-@app.route("/getCustomer")
-def getCustomer():
-    customerUsername = request.args.get('CustomerUsername')
-    customerPassword = request.args.get('CustomerPassword')
-    query = 'SELECT * FROM Customer WHERE CustomerUsername = "{}" AND CustomerPassword = "{}"'.format(customerUsername, customerPassword)
+@app.route("/login")
+def login():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    query = 'SELECT * FROM Customer WHERE CustomerUsername = "{}" AND CustomerPassword = "{}"'.format(username, password)
     response = []
     try:
         result = engine.execute(query)
         if result.rowcount == 0:
-            return jsonify({"response": "Customer not found"})
-        row = result.first()
-        customer = dict(row)
-        response.append(customer)
-        return jsonify(response)
+            # for some reason this query files without adding project in front of the table name XD
+            query = 'SELECT * FROM project.Restaurant WHERE RestaurantID = {} AND RestaurantPassword = {}'.format(username, password)
+            result = engine.execute(query)
+            if result.rowcount == 0:
+                return jsonify({"response": "not found"})
+            else:
+                row = result.first()
+                restaurant = dict(row)
+                response.append('restaurant')
+                response.append(restaurant)
+                return jsonify(response)
+        else:
+          row = result.first()
+          customer = dict(row)
+          response.append('customer')
+          response.append(customer)
+          return jsonify(response)
     except Exception as e:
-        return "Exception thrown"
+        print(e)
+        return jsonify({"response": "not found"})
 
 # Returns all restaurants in the DB
 @app.route("/getRestaurants")
@@ -72,6 +86,7 @@ def getRestaurantsFiltered():
             response.append(restaurant)
         return jsonify(response)
     except Exception as e:
+        print(e)
         return "Exception thrown"
 
 # Given the restaurant ID, get a single restaurant (wrapped in an array)
@@ -89,6 +104,7 @@ def getRestaurant():
         response.append(restaurant)
         return jsonify(response)
     except Exception as e:
+        print(e)
         return "Exception thrown"
 
 # Get all restaurant orders in the DB
