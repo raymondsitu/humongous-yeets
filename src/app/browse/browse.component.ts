@@ -11,7 +11,7 @@ export class BrowseComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   restaurantName: string;
-  restaurants: MatTableDataSource<any[]>;
+  restaurants: MatTableDataSource<any>;
   displayedColumns = ['Name', 'Location', 'Category', 'Rating', 'DeliveryFee'];
   restaurantSelected = false;
   selectedRestaurantID = undefined;
