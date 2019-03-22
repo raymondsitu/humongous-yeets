@@ -235,6 +235,24 @@ def updateCustomer():
         return "Error in backend database"
     return 'Successfully updated Customer {} with {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
 
+#Update a restaurant's information
+@app.route("/updateRestaurant", methods=["PUT"])
+def updateRestaurant():
+    params = request.get_json()
+    restaurantID = params['RestaurantID'] #int
+    name = params["Name"]
+    location = params["Location"]
+    category = params["Category"]
+    rating = params["Rating"] #int
+    deliveryFee = params["DeliveryFee"] #real
+    restaurantPassword = params["RestaurantPassword"] #int
+    query = 'UPDATE Restaurant SET Name = "{}", Location = "{}", Category = "{}", Rating = {}, DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, rating, deliveryFee, restaurantPassword, restaurantID)
+    print(query)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return "Error in backend database"
+    return 'Successfully updated Restaurant {} with {} {} {} {} {} {}'.format(restaurantID, name, location, category, rating, deliveryFee, restaurantPassword)
 if __name__ == '__main__':
     app.run(debug=True)
 
