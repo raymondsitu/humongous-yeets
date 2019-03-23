@@ -11,6 +11,7 @@ import {MatSort, MatTableDataSource} from '@angular/material';
 export class MenuComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @Input() restaurantID: string;
+  @Input() deliveryFee: number;
   @Output() onBack: EventEmitter<any> = new EventEmitter<any>();
 
   selectedItems: any[] = [];
@@ -29,8 +30,8 @@ export class MenuComponent implements OnInit {
       this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
       this.menuItems.sort = this.sort;
     }).catch((response) => {
-      alert("No menu found");
-    })
+      alert('No menu found');
+    });
   }
 
   goBack() {
@@ -39,7 +40,12 @@ export class MenuComponent implements OnInit {
 
   addToCart(row: any, quantity: string) {
     let amount = +quantity;
-    this.cartService.addItem(row, amount);
+    const result: boolean = this.cartService.setDeliveryFee(this.restaurantID, this.deliveryFee);
+    if (result) {
+      this.cartService.addItem(row, amount);
+    } else {
+      alert('Please checkout before ordering from another restaurant');
+    }
   }
 
   // to add/remove items to cart use cartService

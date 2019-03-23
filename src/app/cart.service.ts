@@ -5,7 +5,8 @@ import {HttpService} from './http.service';
   providedIn: 'root'
 })
 export class CartService {
-
+  private deliveryFee: number = null;
+  private currentRestaurant: string = null;
   private selectedItems: { [key: number]: any} = {};
   cartUpdated: EventEmitter<any> = new EventEmitter();
   constructor(private http: HttpService) { }
@@ -15,7 +16,7 @@ export class CartService {
     let key = item['MenuItemID'];
     let selectedItem = this.selectedItems[key];
     // Check if item already exists and if so just add to quantity
-    if (selectedItem != null && selectedItem != undefined) {
+    if (selectedItem != null && selectedItem !== undefined) {
       let currentQuantity = selectedItem['Quantity'];
       let newQuantity = currentQuantity + quantity;
       selectedItem['Quantity'] = newQuantity;
@@ -31,19 +32,30 @@ export class CartService {
   removeItem(itemID: number): void {
     delete this.selectedItems[itemID];
     this.cartUpdated.emit(this.getSelectedItems());
+    if (Object.values(this.selectedItems).length === 0) {
+      this.currentRestaurant = null;
+      this.deliveryFee = 0;
+    }
   }
 
   emptyCart(): void {
     this.selectedItems = {};
+    this.deliveryFee = 0;
+    this.currentRestaurant = null;
   }
-
   getSelectedItems(): any[] {
     return Object.values(this.selectedItems);
   }
 
   getTotalCost(): number {
+    let fee: number;
     const prices = this.getSelectedItems().map((item) => item['Price'] * item['Quantity']);
-    return prices.reduce((a, b) => a + b, 0);
+    if (this.deliveryFee == null) {
+      fee = 0;
+    } else {
+      fee = this.deliveryFee;
+    }
+    return prices.reduce((a, b) => a + b, 0) + fee;
   }
 
   getTotalNumberItems(): number {
@@ -54,4 +66,17 @@ export class CartService {
   checkout(): void {
     console.log('todo');
   }
+
+  setDeliveryFee(restaurantID: string, fee: number): boolean {
+    console.log(this.currentRestaurant);
+    console.log(restaurantID);
+    if (this.currentRestaurant === restaurantID || this.currentRestaurant === null) {
+      this.currentRestaurant = restaurantID;
+      this.deliveryFee = fee;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

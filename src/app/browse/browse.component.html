@@ -38,6 +38,6 @@
   </mat-table>
 </div>
 <div *ngIf="restaurantSelected">
-  <app-menu [restaurantID]="selectedRestaurantID" (onBack)="disableMenu()"></app-menu>
+  <app-menu [restaurantID]="selectedRestaurantID" [deliveryFee]="deliveryFee" (onBack)="disableMenu()"></app-menu>
 </div>
 
