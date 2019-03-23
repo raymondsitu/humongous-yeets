@@ -23,7 +23,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   getTotalCost(): number {
-    return this.cartService.getTotalCost() + this.tip;
+    return this.cartService.getTotalCost();
+  }
+
+  getFinalCost(): number {
+    return this.getTotalCost() + this.tip;
   }
 
   getItemCount(): number {
@@ -41,6 +45,7 @@ export class CheckoutComponent implements OnInit {
 
   checkout(): void {
     // send instructions as well
+    this.removeAll();
     this.cartService.checkout();
   }
 

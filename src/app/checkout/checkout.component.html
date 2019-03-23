@@ -38,8 +38,7 @@
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </mat-table>
 
-  <div class="additional" style="padding-top: 10px">
-    <form class="example-form">
+  <div class="additional" style="padding-top: 50px">
       <mat-form-field style="width: 400px">
         <textarea matInput
                   [(ngModel)]="instructions"
@@ -56,9 +55,10 @@
                [(ngModel)]="tip"
                placeholder="Tip">
       </mat-form-field>
-    </form>
   </div>
-
+  <div class="finalcost" style="padding: 50px 20px">
+    Final cost: {{getFinalCost() | currency}}
+  </div>
   <div class="checkout" style="padding-top: 15px">
     <button mat-raised-button class="checkout-button" style="margin-right: 10px;">
       <mat-icon style="margin-right: 3px;">cake</mat-icon>
