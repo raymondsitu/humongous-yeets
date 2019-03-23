@@ -9,6 +9,7 @@ import { BrowseComponent } from './browse/browse.component';
 import { FormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
+import {MatBadgeModule} from '@angular/material/badge';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatTableModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule, MatSortModule,
@@ -42,7 +43,8 @@ import {UserService} from './user.service';
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatBadgeModule
   ],
   providers: [CartService,
     UserService],

@@ -40,4 +40,9 @@ export class CartService {
     const prices = this.getSelectedItems().map((item) => item['Price'] * item['Quantity']);
     return prices.reduce((a, b) => a + b, 0);
   }
+
+  getTotalNumberItems(): number {
+    const quantity = this.getSelectedItems().map((item) => item['Quantity']);
+    return quantity.reduce((a, b) => a + b, 0);
+  }
 }

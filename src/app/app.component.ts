@@ -1,6 +1,7 @@
 import {HttpService} from './http.service';
 import {Component, ViewEncapsulation} from '@angular/core';
 import {UserService} from './user.service';
+import {CartService} from './cart.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent {
   usertype: string;
 
   constructor(private http: HttpService,
-              private userService: UserService) {
+              private userService: UserService,
+              private cartService: CartService) {
 
     http.getRequest('/', {}).then((res) => console.log(res['response']) );
   }
@@ -41,5 +43,9 @@ export class AppComponent {
           this.userService.setUser(res[1]);
         }
     }).catch((e) => alert('Encounter error: ' + e.message));
+  }
+
+  getNumItems(): number {
+    return this.cartService.getTotalNumberItems();
   }
 }
