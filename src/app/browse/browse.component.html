@@ -30,7 +30,7 @@
 
     <ng-container matColumnDef="DeliveryFee">
       <mat-header-cell *matHeaderCellDef mat-sort-header>DeliveryFee</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.DeliveryFee }}</mat-cell>
+      <mat-cell *matCellDef="let row">{{ row.DeliveryFee | currency }}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
