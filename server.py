@@ -338,7 +338,7 @@ def deleteMenuItem():
         result = engine.execute(query)
     except Exception as e:
         return jsonify("deleteMenuItem: Error")
-    return jsonify('Successfully deleted menu item {}').format(menuItemID)
+    return jsonify('Successfully deleted menu item {}'.format(menuItemID))
 if __name__ == '__main__':
     app.run(debug=True)
 
