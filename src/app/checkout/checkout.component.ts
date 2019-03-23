@@ -31,7 +31,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getItemCount(): number {
-    return this.selectedItems.length;
+    return this.cartService.getTotalNumberItems();
   }
 
   removeItem(id: number): void {
