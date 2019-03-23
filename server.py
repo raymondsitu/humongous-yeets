@@ -302,13 +302,12 @@ def updateMenuItem():
     price = params['Price'] #int
     calories = params['Calories'] #int
     description = params['Description']
-    rating = params['Rating'] #int
-    query = 'UPDATE project.MenuItem SET Name = "{}", MenuID = {}, Price = {}, Calories = {}, Description = "{}", Rating = {} WHERE MenuItemID = {};'.format(name, menuID, price, calories, description, rating, menuItemID)
+    query = 'UPDATE project.MenuItem SET Name = "{}", MenuID = {}, Price = {}, Calories = {}, Description = "{}" WHERE MenuItemID = {};'.format(name, menuID, price, calories, description, menuItemID)
     try:
         result = engine.execute(query)
     except Exception as e:
         return jsonify("updateMenuItem: Error in backend database")
-    return jsonify('Successfully updated MenuItem {} with {} {} {} {} {} {}'.format(menuItemID, name, menuID, price, calories, description, rating))
+    return jsonify('Successfully updated MenuItem {} with {} {} {} {} {}'.format(menuItemID, name, menuID, price, calories, description)
 
 # Update credit card
 @app.route("/updateCreditCard", methods=["PUT"])
