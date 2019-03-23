@@ -1,13 +1,26 @@
 .mat-column-item {
   width: 400px;
+  text-align: center;
+  padding-top: 15px;
 }
 
 .mat-column-price {
   width: 400px;
+  text-align: center;
+  padding-top: 15px;
 }
 
 .mat-column-quantity {
   width: 400px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.mat-column-edit {
+  width: 400px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .mat-header-cell {

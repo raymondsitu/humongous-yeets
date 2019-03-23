@@ -7,9 +7,8 @@ import {CartService} from '../cart.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-
   public selectedItems: any[] = [];
-  public displayedColumns = ['item', 'quantity', 'price'];
+  public displayedColumns = ['item', 'quantity', 'price', 'edit'];
 
   constructor(private cartService: CartService) {
   }

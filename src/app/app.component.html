@@ -84,7 +84,11 @@
           <span style="padding-right: 10px; font-size: 18px">
             Checkout
           </span>
-          <mat-icon> person_pin </mat-icon>
+          <mat-icon matBadge={{getNumItems()}}
+                    [matBadgeHidden] = "getNumItems()==0"
+                    matBadgeColor="warn">
+            person_pin
+          </mat-icon>
         </ng-template>
         <app-checkout></app-checkout>
       </mat-tab>
