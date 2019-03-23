@@ -54,6 +54,32 @@
       </mat-form-field>
       <button id="updateAccountButton" mat-flat-button (click)="updateRestaurant()" color="primary">Update</button>
     </mat-card>
+
+    <div id="addNewMenuItem">
+      <mat-card id="addMenuItemCard">
+        <mat-card-title>Add new item</mat-card-title>
+        <mat-form-field>
+          <input matInput placeholder="Name"
+                 [(ngModel)]="newItem['Name']"
+                 name="password">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Description"
+                 [(ngModel)]="newItem['Description']" name="location">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Calories"
+                 [(ngModel)]="newItem['Calories']" name="category">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Price"
+                 type="number"
+                 [(ngModel)]="newItem['Price']" name="deliveryFee">
+        </mat-form-field>
+        <button id="addNewItem" mat-flat-button (click)="addNewItem()" color="primary">Add</button>
+      </mat-card>
+    </div>
+
     <div id="myRestaurantMenu">
       <button id="toggleMenu" mat-button (click)="toggleMenu()" color="primary">Show Menu</button>
       <div *ngIf="showMenu">
@@ -87,9 +113,16 @@
           </ng-container>
 
           <ng-container matColumnDef="Update">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Update</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let row">
               <button id="updateMenuItem" mat-button (click)="updateMenuItem(row)" color="primary">Update</button>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Delete">
+            <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button id="updateMenuItem" mat-button (click)="deleteMenuItem(row.MenuItemID)" color="primary">Delete</button>
             </mat-cell>
           </ng-container>
 
@@ -97,30 +130,6 @@
           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
       </div>
-    </div>
-
-    <div id="addNewMenuItem">
-      <mat-card id="addMenuItemCard">
-        <mat-form-field>
-          <input matInput placeholder="Name"
-                 [(ngModel)]="newItem['Name']"
-                 name="password">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Description"
-                 [(ngModel)]="newItem['Description']" name="location">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Calories"
-                 [(ngModel)]="newItem['Calories']" name="category">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Price"
-                 type="number"
-                 [(ngModel)]="newItem['Price']" name="deliveryFee">
-        </mat-form-field>
-        <button id="addNewItem" mat-flat-button (click)="addNewItem()" color="primary">Update</button>
-      </mat-card>
     </div>
 
   </div>

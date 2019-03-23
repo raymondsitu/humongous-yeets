@@ -24,4 +24,9 @@ export class HttpService {
   putRequest(url: string, body: any): Promise<any> {
     return this.http.put(baseUrl + url, body).toPromise()
   }
+
+  deleteRequest(url: string, param: any): Promise<any> {
+    const params = new HttpParams({fromObject: param});
+    return this.http.delete(baseUrl + url, {params: params}).toPromise();
+  }
 }

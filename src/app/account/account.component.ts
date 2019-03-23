@@ -18,7 +18,7 @@ export class AccountComponent implements OnInit {
   menu: any;
   menuItems: MatTableDataSource<any>;
   showMenu: boolean = false;
-  displayedColumns = ['Name', 'Description', 'Calories', 'Rating', 'Price', 'Update'];
+  displayedColumns = ['Name', 'Description', 'Calories', 'Rating', 'Price', 'Update', 'Delete'];
   newItem: any = {};
 
   constructor(private http: HttpService,
@@ -88,8 +88,16 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  deleteMenuItem(menuItemID) {
+    this.http.deleteRequest('/deleteMenuItem', { MenuItemID: menuItemID }).then(() => {
+      alert('Deleted')
+    }).catch(() => {
+      alert('Error occured, try again later');
+    });  }
+
   addNewItem() {
     console.log(this.newItem);
+    this.newItem['MenuID'] = this.menu['MenuID'];
     this.http.postRequest('/addMenuItem', this.newItem).then(() => {
       alert('Added')
     }).catch(() => {
