@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpService} from '../http.service';
 import {UserService} from '../user.service';
+import {MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-account',
@@ -9,9 +10,13 @@ import {UserService} from '../user.service';
 })
 export class AccountComponent implements OnInit {
 
+  @ViewChild(MatSort) sort: MatSort;
+
   usertype: string;
   user: any;
   username: string;
+  menu: any;
+  menuItems: MatTableDataSource<any>;
 
   constructor(private http: HttpService,
               private userService: UserService) { }
@@ -20,7 +25,18 @@ export class AccountComponent implements OnInit {
     this.usertype = this.userService.getUsertype();
     if (this.usertype != 'admin') {
       this.user = this.userService.getUser();
-      this.username = this.userService.getUser()['CustomerUsername'];
+      if (this.usertype == 'customer') {
+        this.username = this.userService.getUser()['CustomerUsername'];
+      } else {
+        this.username = this.userService.getUser()['Name'];
+        this.http.getRequest('/getMenu', { RestaurantID: this.user['RestaurantID'] }).then( (result) => {
+          this.menu = result[0];
+          this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
+          this.menuItems.sort = this.sort;
+        }).catch((response) => {
+          alert("No menu found");
+        })
+      }
     }
   }
 
@@ -29,78 +45,20 @@ export class AccountComponent implements OnInit {
       alert('Updated');
     }).catch((res) => {
       alert('Error occured, try again later');
-    })
+    });
   }
 
-  getCustomerUsername() {
-    if (this.usertype == 'customer') {
-      return this.user['CustomerUsername'];
+  updateRestaurant() {
+    let newPW = Number(this.user['RestaurantPassword']);
+    if (isNaN(newPW) || newPW >= 1000000) {
+      alert("New password must be at most 6 numbers long and cannot contain characters other than 0-9");
+      return;
     }
-  }
-
-  getCustomerPassword() {
-    if (this.usertype == 'customer') {
-      return this.user['CustomerPassword'];
-    }
-  }
-
-  getCustomerEmailAddress() {
-    if (this.usertype = 'customer') {
-      return this.user['EmailAddress'];
-    }
-  }
-
-  getPhoneNumber() {
-    if (this.usertype == 'customer') {
-      return this.user['PhoneNumber'];
-    }
-  }
-
-  getAddress() {
-    if (this.usertype == 'customer') {
-      return this.user['Address'];
-    }
-  }
-
-  getRestaurantID() {
-    if (this.usertype == 'restaurant') {
-      return this.user['RestaurantID'];
-    }
-  }
-
-  getName() {
-    if (this.usertype == 'restaurant') {
-      return this.user['Name'];
-    }
-  }
-
-  getLocation() {
-    if (this.usertype == 'restaurant') {
-      return this.user['Location'];
-    }
-  }
-
-  getCategory() {
-    if (this.usertype == 'restaurant') {
-      return this.user['Category'];
-    }
-  }
-
-  getRating() {
-    if (this.usertype == 'restaurant') {
-      return this.user['Rating'];
-    }
-  }
-
-  getDeliveryFee() {
-    if (this.usertype == 'restaurant') {
-      return this.user['DeliveryFee'];
-    }
-  }
-
-  getRestaurantPassword() {
-    if (this.usertype == 'restaurant') {
-      return this.user['RestaurantPassword'];
-    }
+    this.user['RestaurantPassword'] = newPW;
+    this.http.putRequest('/updateRestaurant', this.user).then((res) => {
+      alert('Updated');
+    }).catch((res) => {
+      alert('Error occured, try again later');
+    });
   }
 }

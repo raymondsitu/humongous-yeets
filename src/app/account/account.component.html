@@ -1,8 +1,6 @@
 <div *ngIf="usertype == 'customer'">
-
     <div id="myAccount">
       <mat-card id="myAccountCard" >
-
         <mat-card-title>Hello, {{ username }}</mat-card-title>
         <mat-form-field class="password">
           <input matInput placeholder="Password"
@@ -17,8 +15,7 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Enter new phone number"
-                 [(ngModel)]="user['PhoneNumber']" name="phoneNumber"
-                 style="font-size:18px;">
+                 [(ngModel)]="user['PhoneNumber']" name="phoneNumber">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Enter new address"
@@ -33,6 +30,72 @@
 
 <div *ngIf="usertype == 'restaurant'">
   <div id="myRestaurant">
+    <mat-card id="myRestaurantCard">
+      <mat-card-title>Hello, owner of {{ username }}</mat-card-title>
+      <mat-form-field class="password">
+        <input matInput placeholder="Password"
+               [(ngModel)]="user['RestaurantPassword']"
+               type="password"
+               pattern="[0-9]*"
+               name="password">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Enter new location"
+               [(ngModel)]="user['Location']" name="location">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Enter new category"
+               [(ngModel)]="user['Category']" name="category">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Enter new delivery fee"
+               type="number"
+               [(ngModel)]="user['DeliveryFee']" name="deliveryFee">
+      </mat-form-field>
+      <button id="updateAccountButton" mat-raised-button (click)="updateRestaurant()" color="primary">Update</button>
+    </mat-card>
+
+    <mat-table [dataSource]="" matSort matSortActive="Rating" matSortDirection="desc">
+      <ng-container matColumnDef="Name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Description }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Calories">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Calories }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Rating">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Rating }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Price }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Quantity">
+        <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+        <mat-cell *matCellDef="let element; let row;">
+          <mat-form-field class="rowQuantity">
+            <input type="number" matInput placeholder="Enter quantity..."
+                   #quantity>
+          </mat-form-field>
+          <button mat-raised-button (click)="addToCart(row, quantity.value)">Add to cart</button>
+        </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
 
   </div>
 </div>
