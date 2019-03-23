@@ -119,7 +119,7 @@ create table OrderedMenuItem (
 	SpecialInstructions char(100),
 	PRIMARY KEY (OrderID, MenuItemID),
 	FOREIGN KEY (OrderID) REFERENCES RestaurantOrder(OrderID),
-	FOREIGN KEY (MenuItemID) REFERENCES MenuItem(MenuItemID)
+	FOREIGN KEY (MenuItemID) REFERENCES MenuItem(MenuItemID) ON DELETE CASCADE
 );
 
 
