@@ -17,6 +17,8 @@ export class AccountComponent implements OnInit {
   username: string;
   menu: any;
   menuItems: MatTableDataSource<any>;
+  showMenu: boolean = false;
+  displayedColumns = ['Name', 'Description', 'Calories', 'Rating', 'Price', 'Update'];
 
   constructor(private http: HttpService,
               private userService: UserService) { }
@@ -29,13 +31,6 @@ export class AccountComponent implements OnInit {
         this.username = this.userService.getUser()['CustomerUsername'];
       } else {
         this.username = this.userService.getUser()['Name'];
-        this.http.getRequest('/getMenu', { RestaurantID: this.user['RestaurantID'] }).then( (result) => {
-          this.menu = result[0];
-          this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
-          this.menuItems.sort = this.sort;
-        }).catch((response) => {
-          alert("No menu found");
-        })
       }
     }
   }
@@ -60,5 +55,20 @@ export class AccountComponent implements OnInit {
     }).catch((res) => {
       alert('Error occured, try again later');
     });
+  }
+
+  populateAndShowMenu() {
+    this.http.getRequest('/getMenu', { RestaurantID: this.user['RestaurantID'] }).then( (result) => {
+      this.menu = result[0];
+      this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
+      this.menuItems.sort = this.sort;
+    }).catch((response) => {
+      alert("No menu found");
+    });
+    this.showMenu = true;
+  }
+
+  updateMenuItem(row) {
+    console.log(row);
   }
 }

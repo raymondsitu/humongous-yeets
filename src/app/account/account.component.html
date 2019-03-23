@@ -52,50 +52,52 @@
                type="number"
                [(ngModel)]="user['DeliveryFee']" name="deliveryFee">
       </mat-form-field>
-      <button id="updateAccountButton" mat-raised-button (click)="updateRestaurant()" color="primary">Update</button>
+      <button id="updateAccountButton" mat-flat-button (click)="updateRestaurant()" color="primary">Update</button>
     </mat-card>
+    <div id="myRestaurantMenu">
+      <button id="populateAndShowMenu" mat-button (click)="populateAndShowMenu()" color="primary">Show Menu</button>
+      <div *ngIf="showMenu">
+        <mat-table [dataSource]="menuItems" matSort matSortActive="Rating" matSortDirection="desc">
+          <ng-container matColumnDef="Name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <input matInput placeholder="Name" [(ngModel)]="row.Name" name="category"></mat-cell>
+          </ng-container>
 
-    <mat-table [dataSource]="" matSort matSortActive="Rating" matSortDirection="desc">
-      <ng-container matColumnDef="Name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.Name }}</mat-cell>
-      </ng-container>
+          <ng-container matColumnDef="Description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <input matInput placeholder="Description" [(ngModel)]="row.Description" name="category"></mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="Description">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.Description }}</mat-cell>
-      </ng-container>
+          <ng-container matColumnDef="Calories">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <input type = "number" matInput placeholder="Calories" [(ngModel)]="row.Calories" name="category"></mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="Calories">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.Calories }}</mat-cell>
-      </ng-container>
+          <ng-container matColumnDef="Rating">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{ row.Rating }}</mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="Rating">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.Rating }}</mat-cell>
-      </ng-container>
+          <ng-container matColumnDef="Price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+            <mat-cell *matCellDef="let row"><input type = "number" matInput placeholder="Price" [(ngModel)]="row.Price" name="category"></mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="Price">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ row.Price }}</mat-cell>
-      </ng-container>
+          <ng-container matColumnDef="Update">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Update</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button id="updateMenuItem" mat-button (click)="updateMenuItem(row)" color="primary">Update</button>
+            </mat-cell>
+          </ng-container>
 
-      <ng-container matColumnDef="Quantity">
-        <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
-        <mat-cell *matCellDef="let element; let row;">
-          <mat-form-field class="rowQuantity">
-            <input type="number" matInput placeholder="Enter quantity..."
-                   #quantity>
-          </mat-form-field>
-          <button mat-raised-button (click)="addToCart(row, quantity.value)">Add to cart</button>
-        </mat-cell>
-      </ng-container>
-
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+    </div>
 
   </div>
 </div>
