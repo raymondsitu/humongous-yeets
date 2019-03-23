@@ -22,7 +22,7 @@ create table CreditCard (
 );
 
 create table Restaurant (
-	RestaurantID integer,
+	RestaurantID integer AUTO_INCREMENT,
 	Name char(30),
 	Location char(100),
 	Category char(30),
@@ -72,7 +72,7 @@ FOREIGN KEY (LicensePlateNumber, DriverLicenseNumber) 			REFERENCES DriverVehicl
 
 
 create table RestaurantOrder (
-	OrderID integer,
+	OrderID integer AUTO_INCREMENT,
 	Date DATE,
 	Time TIME,
 	Price REAL,
@@ -93,7 +93,7 @@ FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
 );
 
 create table Menu (
-	MenuID integer,
+	MenuID integer AUTO_INCREMENT,
 	Name char(30),
 	RestaurantID integer NOT NULL,
 	PRIMARY KEY (MenuID),
@@ -101,7 +101,7 @@ FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
 );
 
 create table MenuItem (
-  	MenuItemID integer,
+  	MenuItemID integer AUTO_INCREMENT,
 	Name char(30),
   	MenuID integer NOT NULL,
 	Price REAL,
@@ -164,30 +164,35 @@ INSERT INTO Driver VALUES ("Mark Zuckerberg", "2353 East Mall, Vancouver, BC V6T
 INSERT INTO Driver VALUES ("Spongebob Squarepants", "2153 Pineapple, Bikini Bottom, BC V6T 1Z2", "333333", "Spongebob123");
 INSERT INTO Driver VALUES ("Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", "444444", "Patrick123");
 
-INSERT INTO Restaurant VALUES (1, "McDonalds", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "Fast Food", 3.4, 3.25, 123456);
-INSERT INTO Restaurant VALUES (2, "Miku", "200 Granville St #70, Vancouver, BC V6C 1S4", "Sushi", 4.5, 4.25, 123456);
-INSERT INTO Restaurant VALUES (3, "FreshSlice", "688 Dunsmuir Street Vancouver, British Columbia V6B 1N3", "Pizza", 4.2, 4.00, 123456);
-INSERT INTO Restaurant VALUES (4, "Santouka", "558 W Broadway, Vancouver, BC V5Z 1E9", "Ramen", 4.6, 3.00, 123456);
-INSERT INTO Restaurant VALUES (5, "Uncle Fatih", "6045 University BLVD Vancouver, BC V6T 1Z1", "Pizza", 3.9, 2.25, 123456);
+INSERT INTO Restaurant (Name, Location, Category, Rating, DeliveryFee, RestaurantPassword) VALUES ("McDonalds", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "Fast Food", 3.4, 3.25, 123456);
+INSERT INTO Restaurant (Name, Location, Category, Rating, DeliveryFee, RestaurantPassword) VALUES ("Miku", "200 Granville St #70, Vancouver, BC V6C 1S4", "Sushi", 4.5, 4.25, 123456);
+INSERT INTO Restaurant (Name, Location, Category, Rating, DeliveryFee, RestaurantPassword) VALUES ("FreshSlice", "688 Dunsmuir Street Vancouver, British Columbia V6B 1N3", "Pizza", 4.2, 4.00, 123456);
+INSERT INTO Restaurant (Name, Location, Category, Rating, DeliveryFee, RestaurantPassword) VALUES ("Santouka", "558 W Broadway, Vancouver, BC V5Z 1E9", "Ramen", 4.6, 3.00, 123456);
+INSERT INTO Restaurant (Name, Location, Category, Rating, DeliveryFee, RestaurantPassword) VALUES ("Uncle Fatih", "6045 University BLVD Vancouver, BC V6T 1Z1", "Pizza", 3.9, 2.25, 123456);
 
-INSERT INTO Menu VALUES (1, "McDonalds Menu", 1);
-INSERT INTO Menu VALUES (2, "Miku Menu", 2);
-INSERT INTO Menu VALUES (3, "FreshSlice Menu", 3);
-INSERT INTO Menu VALUES (4, "Santouka Menu", 4);
-INSERT INTO Menu VALUES (5, "Uncle Fatih Menu", 5);
+INSERT INTO Menu (Name, RestaurantID) VALUES ("McDonalds Menu", 1);
+INSERT INTO Menu (Name, RestaurantID) VALUES ("Miku Menu", 2);
+INSERT INTO Menu (Name, RestaurantID) VALUES ("FreshSlice Menu", 3);
+INSERT INTO Menu (Name, RestaurantID) VALUES ("Santouka Menu", 4);
+INSERT INTO Menu (Name, RestaurantID) VALUES ("Uncle Fatih Menu", 5);
 
 
-INSERT INTO RestaurantOrder VALUES (1, "2019-02-10", TIME("11:10"), 10.00, 4, 1.00, "delivered", "2329 West Mall, Vancouver, BC V6T 1Z4", "rsitu","4324-0987-1234-8765","Kristy Kong", "2053 Main Mall, Vancouver, BC V6T 1Z2", 1);
-INSERT INTO RestaurantOrder VALUES (2, "2019-02-15", TIME("11:12"), 22.25, 14, 1.00, "delivered", "2330 West Mall, Vancouver, BC V6T 1Z4", "kwong","1111-9898-7676-5252","Sharpe Velleman", "2053 West Mall, Vancouver, BC V6T 1Z2", 2);
-INSERT INTO RestaurantOrder VALUES (3, "2019-02-16", TIME("11:15"), 3.00, 12, 1.00, "delivered", "2530 West Mall, Vancouver, BC V6T 1Z4", "mshan","2222-0000-9999-8888","Berkowitz Pearson", "2053 East Mall, Vancouver, BC V6T 1Z2", 3);
-INSERT INTO RestaurantOrder VALUES (4, "2019-02-18", TIME("11:22"), 24.00, 8, 1.00, "delivered", "2630 West Mall, Vancouver, BC V6T 1Z4", "yli","4321-0987-7654-1234","Spongebob Squarepants", "2153 Pineapple, Bikini Bottom, BC V6T 1Z2", 4);
-INSERT INTO RestaurantOrder VALUES (5, "2019-02-24", TIME("11:10"), 5.00, 4, 1.00, "order made", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "hughmungus","0808-9797-6565-2323","Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", 5);
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
+VALUES ("2019-02-10", TIME("11:10"), 10.00, 4, 1.00, "delivered", "2329 West Mall, Vancouver, BC V6T 1Z4", "rsitu","4324-0987-1234-8765","Kristy Kong", "2053 Main Mall, Vancouver, BC V6T 1Z2", 1);
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
+VALUES ("2019-02-15", TIME("11:12"), 22.25, 14, 1.00, "delivered", "2330 West Mall, Vancouver, BC V6T 1Z4", "kwong","1111-9898-7676-5252","Sharpe Velleman", "2053 West Mall, Vancouver, BC V6T 1Z2", 2);
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
+VALUES ("2019-02-16", TIME("11:15"), 3.00, 12, 1.00, "delivered", "2530 West Mall, Vancouver, BC V6T 1Z4", "mshan","2222-0000-9999-8888","Berkowitz Pearson", "2053 East Mall, Vancouver, BC V6T 1Z2", 3);
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
+VALUES ("2019-02-18", TIME("11:22"), 24.00, 8, 1.00, "delivered", "2630 West Mall, Vancouver, BC V6T 1Z4", "yli","4321-0987-7654-1234","Spongebob Squarepants", "2153 Pineapple, Bikini Bottom, BC V6T 1Z2", 4);
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
+VALUES ("2019-02-24", TIME("11:10"), 5.00, 4, 1.00, "order made", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "hughmungus","0808-9797-6565-2323","Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", 5);
 
-INSERT INTO MenuItem VALUES (1, "Big Mac", 1, 5.00, 550, "burger 2 patties", 3.9);
-INSERT INTO MenuItem VALUES (2, "Salmon Sashimi",2, 22.25, 500, "fresh fish", 4.6);
-INSERT INTO MenuItem VALUES (3, "Cheese Pizza Slice", 3, 3.00, 340, "cheese pizza with chedder", 4.2);
-INSERT INTO MenuItem VALUES (4, "Shio Ramen", 4, 12.00, 750, "ramen noodles with pork", 4.5);
-INSERT INTO MenuItem VALUES (5, "Cheese Pizza Slice", 5, 2.50, 370, "a slice of cheese pizza", 3.9);
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Big Mac", 1, 5.00, 550, "burger 2 patties", 3.9);
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Salmon Sashimi",2, 22.25, 500, "fresh fish", 4.6);
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Cheese Pizza Slice", 3, 3.00, 340, "cheese pizza with chedder", 4.2);
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Shio Ramen", 4, 12.00, 750, "ramen noodles with pork", 4.5);
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Cheese Pizza Slice", 5, 2.50, 370, "a slice of cheese pizza", 3.9);
 
 INSERT INTO OrderedMenuItem VALUES (1, 1, 2, "no pickles");
 INSERT INTO OrderedMenuItem VALUES (2, 2, 1, "");

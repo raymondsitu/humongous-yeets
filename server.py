@@ -214,7 +214,7 @@ def addCustomer():
     customerPassword = params['CustomerPassword']
     emailAddress = params['EmailAddress']
     phoneNumber = params['PhoneNumber']
-    address = request.form['Address']
+    address = params['Address']
     query = 'INSERT INTO Customer VALUES ("{}", "{}", "{}", "{}", "{}");'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
     try:
         result = engine.execute(query)
@@ -226,19 +226,20 @@ def addCustomer():
 @app.route("/addMenuItem", methods=["POST"])
 def addMenuItem():
     params = request.get_json()
-    menuItemID = params['MenuItemID'] #int
     name = params['Name']
     menuID = params['MenuID'] #int
     price = params['Price'] #real
     calories = params['Calories'] #int
     description = params['Description']
     rating = params['Rating'] #int
-    query = 'INSERT INTO MenuItem VALUES ({}, "{}", {}, "{}", {}, {}, "{}", {})'.format(menuItemID, name, menuID, price, calories, description, rating)
+    query = 'INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("{}", {}, {}, {}, "{}", {})'.format(name, menuID, price, calories, description, rating)
+    print("===================================================")
+    print(query)
     try:
         result = engine.execute(query)
     except Exception as e:
         return jsonify("addMenuItem: Error in backend database")
-    return jsonify('Successfully added {} {} {} {} {} {} {} {})'.format(menuItemID, name, menuID, price, calories, description, rating))
+    return jsonify('Successfully added {} {} {} {} {} {})'.format(name, menuID, price, calories, description, rating))
 
 # ==================================== PUT endpoints =======================================
 

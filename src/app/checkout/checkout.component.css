@@ -1,0 +1,19 @@
+.mat-column-item {
+  width: 400px;
+}
+
+.mat-column-price {
+  width: 400px;
+}
+
+.mat-column-quantity {
+  width: 400px;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+.mat-footer-cell {
+  padding-top: 15px;
+}

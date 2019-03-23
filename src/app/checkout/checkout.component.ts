@@ -25,4 +25,8 @@ export class CheckoutComponent implements OnInit {
     return this.cartService.getTotalCost();
   }
 
+  getItemCount(): number {
+    return this.selectedItems.length;
+  }
+
 }
