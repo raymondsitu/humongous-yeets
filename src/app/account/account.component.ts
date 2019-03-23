@@ -70,5 +70,10 @@ export class AccountComponent implements OnInit {
 
   updateMenuItem(row) {
     console.log(row);
+    this.http.putRequest('/updateMenuItem', row).then((res) => {
+      alert('Updated');
+    }).catch((res) => {
+      alert('Error occured, try again later');
+    });
   }
 }
