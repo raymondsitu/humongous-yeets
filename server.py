@@ -224,6 +224,22 @@ def addCustomer():
         return jsonify("addCustomer: Error in backend database")
     return jsonify('Successfully added {} {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address))
 
+# Create a credit card
+@app.route("/addCreditCard", methods=["POST"])
+def addCreditCard():
+    params = request.get_json()
+    ccNo = params['CreditCardNumber']
+    bAdd = params['BillingAddress']
+    dExp = params['DateExpire']
+    name = params['NameOnCard']
+    cusUser = params['CustomerUsername']
+    query = 'INSERT INTO project.CreditCard VALUES ("{}", "{}", "{}", "{}", "{}")'.format(ccNo, bAdd, dExp, name, cusUser)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return jsonify("addMenuItem: Error in backend database")
+    return jsonify('Successfully added {} {} {} {} {})'.format(ccNo, bAdd, dExp, name, cusUser))
+
 # Creates a MenuItem
 @app.route("/addMenuItem", methods=["POST"])
 def addMenuItem():
@@ -233,13 +249,12 @@ def addMenuItem():
     price = params['Price'] #real
     calories = params['Calories'] #int
     description = params['Description']
-    rating = params['Rating'] #int
-    query = 'INSERT INTO project.MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("{}", {}, {}, {}, "{}", {})'.format(name, menuID, price, calories, description, rating)
+    query = 'INSERT INTO project.MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("{}", {}, {}, {}, "{}")'.format(name, menuID, price, calories, description)
     try:
         result = engine.execute(query)
     except Exception as e:
         return jsonify("addMenuItem: Error in backend database")
-    return jsonify('Successfully added {} {} {} {} {} {})'.format(name, menuID, price, calories, description, rating))
+    return jsonify('Successfully added {} {} {} {} {})'.format(name, menuID, price, calories, description))
 
 # ==================================== PUT endpoints =======================================
 
