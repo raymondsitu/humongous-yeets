@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
   menuItems: MatTableDataSource<any>;
   showMenu: boolean = false;
   displayedColumns = ['Name', 'Description', 'Calories', 'Rating', 'Price', 'Update'];
+  newItem: any = {};
 
   constructor(private http: HttpService,
               private userService: UserService) { }
@@ -31,6 +32,13 @@ export class AccountComponent implements OnInit {
         this.username = this.userService.getUser()['CustomerUsername'];
       } else {
         this.username = this.userService.getUser()['Name'];
+        this.http.getRequest('/getMenu', { RestaurantID: this.user['RestaurantID'] }).then( (result) => {
+          this.menu = result[0];
+          this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
+          this.menuItems.sort = this.sort;
+        }).catch((response) => {
+          alert("No menu found");
+        });
       }
     }
   }
@@ -57,15 +65,18 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  populateAndShowMenu() {
-    this.http.getRequest('/getMenu', { RestaurantID: this.user['RestaurantID'] }).then( (result) => {
-      this.menu = result[0];
-      this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
-      this.menuItems.sort = this.sort;
-    }).catch((response) => {
-      alert("No menu found");
-    });
-    this.showMenu = true;
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+    if (this.showMenu == true) {
+      // Refetch menu
+      this.http.getRequest('/getMenu', { RestaurantID: this.user['RestaurantID'] }).then( (result) => {
+        this.menu = result[0];
+        this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
+        this.menuItems.sort = this.sort;
+      }).catch((response) => {
+        alert("No menu found");
+      });
+    }
   }
 
   updateMenuItem(row) {
@@ -73,6 +84,15 @@ export class AccountComponent implements OnInit {
     this.http.putRequest('/updateMenuItem', row).then((res) => {
       alert('Updated');
     }).catch((res) => {
+      alert('Error occured, try again later');
+    });
+  }
+
+  addNewItem() {
+    console.log(this.newItem);
+    this.http.postRequest('/addMenuItem', this.newItem).then(() => {
+      alert('Added')
+    }).catch(() => {
       alert('Error occured, try again later');
     });
   }

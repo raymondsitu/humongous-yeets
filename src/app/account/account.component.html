@@ -55,7 +55,7 @@
       <button id="updateAccountButton" mat-flat-button (click)="updateRestaurant()" color="primary">Update</button>
     </mat-card>
     <div id="myRestaurantMenu">
-      <button id="populateAndShowMenu" mat-button (click)="populateAndShowMenu()" color="primary">Show Menu</button>
+      <button id="toggleMenu" mat-button (click)="toggleMenu()" color="primary">Show Menu</button>
       <div *ngIf="showMenu">
         <mat-table [dataSource]="menuItems" matSort matSortActive="Rating" matSortDirection="desc">
           <ng-container matColumnDef="Name">
@@ -97,6 +97,30 @@
           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
       </div>
+    </div>
+
+    <div id="addNewMenuItem">
+      <mat-card id="addMenuItemCard">
+        <mat-form-field>
+          <input matInput placeholder="Name"
+                 [(ngModel)]="newItem['Name']"
+                 name="password">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Description"
+                 [(ngModel)]="newItem['Description']" name="location">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Calories"
+                 [(ngModel)]="newItem['Calories']" name="category">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Price"
+                 type="number"
+                 [(ngModel)]="newItem['Price']" name="deliveryFee">
+        </mat-form-field>
+        <button id="addNewItem" mat-flat-button (click)="addNewItem()" color="primary">Update</button>
+      </mat-card>
     </div>
 
   </div>
