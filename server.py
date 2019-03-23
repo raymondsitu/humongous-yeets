@@ -17,7 +17,7 @@ def hello():
 # Returns all customers in the DB
 @app.route("/getCustomers")
 def getCustomers():
-    query = 'SELECT * FROM Customer;'
+    query = 'SELECT * FROM project.Customer;'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -32,7 +32,7 @@ def getCustomers():
 def login():
     username = request.args.get('username')
     password = request.args.get('password')
-    query = 'SELECT * FROM Customer WHERE CustomerUsername = "{}" AND CustomerPassword = "{}"'.format(username, password)
+    query = 'SELECT * FROM project.Customer WHERE CustomerUsername = "{}" AND CustomerPassword = "{}"'.format(username, password)
     response = []
     try:
         result = engine.execute(query)
@@ -61,7 +61,7 @@ def login():
 # Returns all restaurants in the DB
 @app.route("/getRestaurants")
 def getRestaurants():
-    query = 'SELECT * FROM Restaurant'
+    query = 'SELECT * FROM project.Restaurant'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -75,7 +75,7 @@ def getRestaurants():
 @app.route("/getRestaurantsFiltered")
 def getRestaurantsFiltered():
     restaurantName = request.args.get('Name')
-    query = "SELECT * FROM Restaurant WHERE Name LIKE '%%{}%%'".format(restaurantName)
+    query = "SELECT * FROM project.Restaurant WHERE Name LIKE '%%{}%%'".format(restaurantName)
     response = []
     try:
         result = engine.execute(query)
@@ -94,7 +94,7 @@ def getRestaurantsFiltered():
 def getRestaurant():
     try:
         restaurantID = request.args.get('RestaurantID')
-        query = 'SELECT * FROM Restaurant WHERE RestaurantID = {}'.format(restaurantID)
+        query = 'SELECT * FROM project.Restaurant WHERE RestaurantID = {}'.format(restaurantID)
         response = []
         result = engine.execute(query)
         if result.rowcount == 0:
@@ -110,7 +110,7 @@ def getRestaurant():
 # Get all restaurant orders in the DB
 @app.route("/getRestaurantOrders")
 def getRestaurantOrders():
-    query = 'SELECT * FROM RestaurantOrder'
+    query = 'SELECT * FROM project.RestaurantOrder'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -124,7 +124,7 @@ def getRestaurantOrders():
 # Get all restaurant menus in  the DB
 @app.route("/getMenus")
 def getMenus():
-    query = 'SELECT * FROM Menu'
+    query = 'SELECT * FROM project.Menu'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -138,7 +138,7 @@ def getMenus():
 def getMenu():
   try:
     restaurantID = request.args.get('RestaurantID')
-    query = 'SELECT * FROM Menu WHERE RestaurantID = {}'.format(restaurantID)
+    query = 'SELECT * FROM project.Menu WHERE RestaurantID = {}'.format(restaurantID)
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -146,7 +146,7 @@ def getMenu():
     row = result.first()
     menu = dict(row)
 
-    menuItemsQuery = 'SELECT * FROM MenuItem WHERE MenuID = {}'.format(menu['MenuID'])
+    menuItemsQuery = 'SELECT * FROM project.MenuItem WHERE MenuID = {}'.format(menu['MenuID'])
     menuItemsResult = engine.execute(menuItemsQuery)
     menuItems = []
     for itemRow in menuItemsResult:
@@ -162,7 +162,7 @@ def getMenu():
 # Get all menu items in the DB
 @app.route("/getMenuItems")
 def getMenuItems():
-    query = 'SELECT * FROM MenuItem'
+    query = 'SELECT * FROM project.MenuItem'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -175,7 +175,7 @@ def getMenuItems():
 # Get all ordered menu items from the DB
 @app.route("/getOrderedMenuItems")
 def getMOrderedenuItems():
-    query = 'SELECT * FROM OrderedMenuItem'
+    query = 'SELECT * FROM project.OrderedMenuItem'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
@@ -191,7 +191,7 @@ def getOrdersBetween():
   customerUsername = request.args.get('CustomerUsername')
   dateFrom = request.args.get('DateFrom')
   dateTo = request.args.get('DateTo')
-  query = 'SELECT * FROM RestaurantOrder WHERE CustomerUsername = "{}" AND Date >= "{}" AND Date <= "{}"'.format(customerUsername, dateFrom, dateTo)
+  query = 'SELECT * FROM project.RestaurantOrder WHERE CustomerUsername = "{}" AND Date >= "{}" AND Date <= "{}"'.format(customerUsername, dateFrom, dateTo)
   response = []
   result = engine.execute(query)
   if result.rowcount == 0:
@@ -204,6 +204,8 @@ def getOrdersBetween():
       response.append(ordersBetween)
   return jsonify(response)
 
+# Get array of all orders still in progress
+
 # ====================================== POST endpoints ====================================
 
 # Given all the fields in a POST form, create a new customer
@@ -215,7 +217,7 @@ def addCustomer():
     emailAddress = params['EmailAddress']
     phoneNumber = params['PhoneNumber']
     address = params['Address']
-    query = 'INSERT INTO Customer VALUES ("{}", "{}", "{}", "{}", "{}");'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
+    query = 'INSERT INTO project.Customer VALUES ("{}", "{}", "{}", "{}", "{}");'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
     try:
         result = engine.execute(query)
     except Exception as e:
@@ -232,7 +234,7 @@ def addMenuItem():
     calories = params['Calories'] #int
     description = params['Description']
     rating = params['Rating'] #int
-    query = 'INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("{}", {}, {}, {}, "{}", {})'.format(name, menuID, price, calories, description, rating)
+    query = 'INSERT INTO project.MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("{}", {}, {}, {}, "{}", {})'.format(name, menuID, price, calories, description, rating)
     try:
         result = engine.execute(query)
     except Exception as e:
@@ -250,7 +252,7 @@ def updateCustomer():
     emailAddress = params['EmailAddress']
     phoneNumber = params['PhoneNumber']
     address = params['Address']
-    query = 'UPDATE Customer SET CustomerPassword = "{}", EmailAddress = "{}", PhoneNumber = "{}", Address = "{}" WHERE CustomerUsername = "{}";'.format(customerPassword, emailAddress, phoneNumber, address, customerUsername)
+    query = 'UPDATE project.Customer SET CustomerPassword = "{}", EmailAddress = "{}", PhoneNumber = "{}", Address = "{}" WHERE CustomerUsername = "{}";'.format(customerPassword, emailAddress, phoneNumber, address, customerUsername)
     try:
         result = engine.execute(query)
     except Exception as e:
@@ -268,7 +270,7 @@ def updateRestaurant():
     rating = params["Rating"] #int
     deliveryFee = params["DeliveryFee"] #real
     restaurantPassword = params["RestaurantPassword"] #int
-    query = 'UPDATE Restaurant SET Name = "{}", Location = "{}", Category = "{}", Rating = {}, DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, rating, deliveryFee, restaurantPassword, restaurantID)
+    query = 'UPDATE project.Restaurant SET Name = "{}", Location = "{}", Category = "{}", Rating = {}, DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, rating, deliveryFee, restaurantPassword, restaurantID)
     try:
         result = engine.execute(query)
     except Exception as e:
@@ -285,7 +287,7 @@ def updateMenuItem():
     price = params['Price'] #int
     calories = params['Calories'] #int
     rating = params['Rating'] #int
-    query = 'UPDATE MenuItem SET Name = "{}", MenuID = {}, Price = {}, Calories = {}, Rating = {} WHERE MenuItemID = {};'.format(name, menuID, price, calories, rating, menuItemID)
+    query = 'UPDATE project.MenuItem SET Name = "{}", MenuID = {}, Price = {}, Calories = {}, Rating = {} WHERE MenuItemID = {};'.format(name, menuID, price, calories, rating, menuItemID)
     try:
         result = engine.execute(query)
     except Exception as e:
@@ -301,7 +303,7 @@ def updateCreditCard():
     dExp = params['DateExpire']
     name = params['NameOnCard']
     cusUser = params['CustomerUsername']
-    query = 'UPDATE CreditCard SET BillingAddress = "{}", DateExpire = "{}", NameOnCard = "{}", CustomerUsername = "{}" WHERE CreditCardNumber = "{}";'.format(bAdd, dExp, name, cusUser, ccNo)
+    query = 'UPDATE project.CreditCard SET BillingAddress = "{}", DateExpire = "{}", NameOnCard = "{}", CustomerUsername = "{}" WHERE CreditCardNumber = "{}";'.format(bAdd, dExp, name, cusUser, ccNo)
     try:
         result = engine.execute(query)
     except Exception as e:
