@@ -21,7 +21,7 @@ def getCustomers():
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-        return "No customers found"
+        return jsonify("No customers found")
     for row in result:
         customer = dict(row)
         response.append(customer)
@@ -65,7 +65,7 @@ def getRestaurants():
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-        return "No restaurants found"
+        return jsonify("No restaurants found")
     for row in result:
         restaurant = dict(row)
         response.append(restaurant)
@@ -80,14 +80,14 @@ def getRestaurantsFiltered():
     try:
         result = engine.execute(query)
         if result.rowcount == 0:
-            return "No restaurants found"
+            return jsonify("No restaurants found")
         for row in result:
             restaurant = dict(row)
             response.append(restaurant)
         return jsonify(response)
     except Exception as e:
         print(e)
-        return "Exception thrown"
+        return jsonify("Exception thrown")
 
 # Given the restaurant ID, get a single restaurant (wrapped in an array)
 @app.route("/getRestaurant")
@@ -98,14 +98,14 @@ def getRestaurant():
         response = []
         result = engine.execute(query)
         if result.rowcount == 0:
-            return "Restaurant not found"
+            return jsonify("No restaurant found")
         row = result.first()
         restaurant = dict(row)
         response.append(restaurant)
         return jsonify(response)
     except Exception as e:
         print(e)
-        return "Exception thrown"
+        return jsonify("Exception thrown")
 
 # Get all restaurant orders in the DB
 @app.route("/getRestaurantOrders")
@@ -114,7 +114,7 @@ def getRestaurantOrders():
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-        return "No restaurant orders found"
+        return jsonify("No restaurant orders found")
     for row in result:
         restaurantOrder = dict(row)
         restaurantOrder['Time'] = str(restaurantOrder['Time'])
@@ -128,7 +128,7 @@ def getMenus():
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-        return "No menus found"
+        return jsonify("No menus found")
     for row in result:
         menu = dict(row)
         response.append(menu)
@@ -142,7 +142,7 @@ def getMenu():
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-      return "Menu not found"
+      return jsonify("Menu not found")
     row = result.first()
     menu = dict(row)
 
@@ -157,7 +157,7 @@ def getMenu():
     response.append(menu)
     return jsonify(response)
   except Exception as e:
-    return "Exception thrown"
+      return jsonify("Exception thrown")
 
 # Get all menu items in the DB
 @app.route("/getMenuItems")
@@ -166,26 +166,26 @@ def getMenuItems():
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-        return "No menu items found"
+        return jsonify("No menu items found")
     for row in result:
         menuItem = dict(row)
         response.append(menuItem)
     return jsonify(response)
 
-#Get all ordered menu items from the DB
+# Get all ordered menu items from the DB
 @app.route("/getOrderedMenuItems")
 def getMOrderedenuItems():
     query = 'SELECT * FROM OrderedMenuItem'
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
-        return "No ordered menu items found"
+        return jsonify("No ordered menu items found")
     for row in result:
         orderedMenuItem = dict(row)
         response.append(orderedMenuItem)
     return jsonify(response)
 
-#Get array of all menu categories that belong ot this specific menu
+# Get array of all menu categories that belong ot this specific menu
 @app.route("/getOrdersBetween")
 def getOrdersBetween():
   customerUsername = request.args.get('CustomerUsername')
@@ -195,7 +195,7 @@ def getOrdersBetween():
   response = []
   result = engine.execute(query)
   if result.rowcount == 0:
-      return "No orders found between these dates"
+      return jsonify("No orders found between these dates")
   for row in result:
       print(row)
       ordersBetween = dict(row)
@@ -233,8 +233,6 @@ def addMenuItem():
     description = params['Description']
     rating = params['Rating'] #int
     query = 'INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("{}", {}, {}, {}, "{}", {})'.format(name, menuID, price, calories, description, rating)
-    print("===================================================")
-    print(query)
     try:
         result = engine.execute(query)
     except Exception as e:
@@ -256,10 +254,10 @@ def updateCustomer():
     try:
         result = engine.execute(query)
     except Exception as e:
-        return jsonify("Error in backend database")
+        return jsonify("updateCustomer: Error in backend database")
     return jsonify('Successfully updated Customer {} with {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address))
 
-#Update a restaurant's information
+# Update a restaurant's information
 @app.route("/updateRestaurant", methods=["PUT"])
 def updateRestaurant():
     params = request.get_json()
@@ -271,12 +269,45 @@ def updateRestaurant():
     deliveryFee = params["DeliveryFee"] #real
     restaurantPassword = params["RestaurantPassword"] #int
     query = 'UPDATE Restaurant SET Name = "{}", Location = "{}", Category = "{}", Rating = {}, DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, rating, deliveryFee, restaurantPassword, restaurantID)
-    print(query)
     try:
         result = engine.execute(query)
     except Exception as e:
-        return jsonify("Error in backend database")
+        return jsonify("updateRestaurant: Error in backend database")
     return jsonify('Successfully updated Restaurant {} with {} {} {} {} {} {}'.format(restaurantID, name, location, category, rating, deliveryFee, restaurantPassword))
+
+# Update a menu item
+@app.route("/updateMenuItem", methods=["PUT"])
+def updateMenuItem():
+    params = request.get_json()
+    menuItemID = params['MenuItemID'] #int
+    name = params['Name']
+    menuID = params['MenuID'] #int
+    price = params['Price'] #int
+    calories = params['Calories'] #int
+    rating = params['Rating'] #int
+    query = 'UPDATE MenuItem SET Name = "{}", MenuID = {}, Price = {}, Calories = {}, Rating = {} WHERE MenuItemID = {};'.format(name, menuID, price, calories, rating, menuItemID)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return jsonify("updateMenuItem: Error in backend database")
+    return jsonify('Successfully updated MenuItem {} with {} {} {} {} {}'.format(menuItemID, name, menuID, price, calories, rating))
+
+# Update credit card
+@app.route("/updateCreditCard", methods=["PUT"])
+def updateCreditCard():
+    params = request.get_json()
+    ccNo = params['CreditCardNumber']
+    bAdd = params['BillingAddress']
+    dExp = params['DateExpire']
+    name = params['NameOnCard']
+    cusUser = params['CustomerUsername']
+    query = 'UPDATE CreditCard SET BillingAddress = "{}", DateExpire = "{}", NameOnCard = "{}", CustomerUsername = "{}" WHERE CreditCardNumber = "{}";'.format(bAdd, dExp, name, cusUser, ccNo)
+    try:
+        result = engine.execute(query)
+    except Exception as e:
+        return jsonify("updateCreditCard: Error in backend database")
+    return jsonify('Successfully updated Credit Card {} with {} {} {} {}'.format(ccNo, bAdd, dExp, name, cusUser))
+
 if __name__ == '__main__':
     app.run(debug=True)
 
