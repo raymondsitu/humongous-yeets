@@ -20,3 +20,8 @@ h1 {
   text-align: left;
   padding: 1%;
 }
+
+.mat-button, .mat-raised-button, .login-button {
+  background-color: royalblue;
+  color: white;
+}

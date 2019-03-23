@@ -30,3 +30,13 @@
 .mat-footer-cell {
   padding-top: 15px;
 }
+
+.mat-button, .mat-flat-button, .remove-button {
+  background-color: red;
+  color: white;
+}
+
+.mat-button, .mat-raised-button, .checkout-button {
+  background-color: royalblue;
+  color: white;
+}

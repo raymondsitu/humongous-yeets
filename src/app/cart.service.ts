@@ -1,4 +1,5 @@
 import {Injectable, EventEmitter} from '@angular/core';
+import {HttpService} from './http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ export class CartService {
 
   private selectedItems: { [key: number]: any} = {};
   cartUpdated: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   // add or update item
   addItem(item: any, quantity: number): void {
@@ -32,6 +33,10 @@ export class CartService {
     this.cartUpdated.emit(this.getSelectedItems());
   }
 
+  emptyCart(): void {
+    this.selectedItems = {};
+  }
+
   getSelectedItems(): any[] {
     return Object.values(this.selectedItems);
   }
@@ -44,5 +49,9 @@ export class CartService {
   getTotalNumberItems(): number {
     const quantity = this.getSelectedItems().map((item) => item['Quantity']);
     return quantity.reduce((a, b) => a + b, 0);
+  }
+
+  checkout(): void {
+    console.log('todo');
   }
 }

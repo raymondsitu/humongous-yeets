@@ -28,4 +28,17 @@ export class CheckoutComponent implements OnInit {
     return this.selectedItems.length;
   }
 
+  removeItem(id: number): void {
+    this.cartService.removeItem(id);
+  }
+
+  removeAll(): void {
+    this.cartService.emptyCart();
+    this.selectedItems = [];
+  }
+
+  checkout(): void {
+    this.cartService.checkout();
+  }
+
 }
