@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
   selectedItems: any[] = [];
   menu: any;
   menuItems: MatTableDataSource<any>;
-  displayedColumns = ['Name', 'Description', 'Calories', 'Rating', 'Price', 'Quantity'];
+  displayedColumns = ['Name', 'Description', 'Calories', 'Price', 'Quantity', 'Add'];
 
   constructor(private cartService: CartService,
               private http: HttpService) {

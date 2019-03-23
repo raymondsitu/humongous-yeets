@@ -83,7 +83,7 @@
     <div id="myRestaurantMenu">
       <button id="toggleMenu" mat-button (click)="toggleMenu()" color="primary">Show Menu</button>
       <div *ngIf="showMenu">
-        <mat-table [dataSource]="menuItems" matSort matSortActive="Rating" matSortDirection="desc">
+        <mat-table [dataSource]="menuItems" matSort>
           <ng-container matColumnDef="Name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let row">
@@ -100,11 +100,6 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>Calories</mat-header-cell>
             <mat-cell *matCellDef="let row">
               <input type = "number" matInput placeholder="Calories" [(ngModel)]="row.Calories" name="category"></mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="Rating">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
-            <mat-cell *matCellDef="let row">{{ row.Rating }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Price">

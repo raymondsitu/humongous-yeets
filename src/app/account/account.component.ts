@@ -18,7 +18,7 @@ export class AccountComponent implements OnInit {
   menu: any;
   menuItems: MatTableDataSource<any>;
   showMenu: boolean = false;
-  displayedColumns = ['Name', 'Description', 'Calories', 'Rating', 'Price', 'Update', 'Delete'];
+  displayedColumns = ['Name', 'Description', 'Calories', 'Price', 'Update', 'Delete'];
   newItem: any = {};
 
   constructor(private http: HttpService,
