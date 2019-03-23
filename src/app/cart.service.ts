@@ -48,14 +48,8 @@ export class CartService {
   }
 
   getTotalCost(): number {
-    let fee: number;
     const prices = this.getSelectedItems().map((item) => item['Price'] * item['Quantity']);
-    if (this.deliveryFee == null) {
-      fee = 0;
-    } else {
-      fee = this.deliveryFee;
-    }
-    return prices.reduce((a, b) => a + b, 0) + fee;
+    return prices.reduce((a, b) => a + b, 0);
   }
 
   getTotalNumberItems(): number {
@@ -63,19 +57,45 @@ export class CartService {
     return quantity.reduce((a, b) => a + b, 0);
   }
 
-  checkout(): void {
-    console.log('todo');
+  checkout(user: string, tip: number): void {
+    let orderedItems = [];
+    let info = {};
+    for (let key of Object.keys(this.selectedItems)) {
+      let item = {};
+      item['MenuItemId'] = key;
+      item['quantity'] = this.selectedItems[key]['Quantity'];
+      orderedItems.push(item);
+    }
+    info['Price'] = null;
+    info['TipAmount'] = tip;
+    info['Location'] = null;
+    info['CustomerUsername'] = user;
+    info['CreditCardNumber'] = null;
+    info['RestaurantID'] = this.currentRestaurant;
+    const body: any = {RestaurantsOrderedFrom: info, OrderedItems: orderedItems};
+    // this.http.postRequest('/addOrder', body)
+    //   .then((res) => {
+    //   alert('Your order has been sent');
+    //   })
+    //   .catch((e) => console.log(e)
+    //   );
   }
 
   setDeliveryFee(restaurantID: string, fee: number): boolean {
-    console.log(this.currentRestaurant);
-    console.log(restaurantID);
     if (this.currentRestaurant === restaurantID || this.currentRestaurant === null) {
       this.currentRestaurant = restaurantID;
       this.deliveryFee = fee;
       return true;
     } else {
       return false;
+    }
+  }
+
+  getDeliveryFee(): number {
+    if (this.deliveryFee !== null) {
+      return this.deliveryFee;
+    } else {
+      return 0;
     }
   }
 

@@ -26,9 +26,9 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.usertype = this.userService.getUsertype();
-    if (this.usertype != 'admin') {
+    if (this.usertype !== 'admin') {
       this.user = this.userService.getUser();
-      if (this.usertype == 'customer') {
+      if (this.usertype === 'customer') {
         this.username = this.userService.getUser()['CustomerUsername'];
       } else {
         this.username = this.userService.getUser()['Name'];
@@ -37,7 +37,7 @@ export class AccountComponent implements OnInit {
           this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
           this.menuItems.sort = this.sort;
         }).catch((response) => {
-          alert("No menu found");
+          alert('No menu found');
         });
       }
     }
@@ -52,9 +52,9 @@ export class AccountComponent implements OnInit {
   }
 
   updateRestaurant() {
-    let newPW = Number(this.user['RestaurantPassword']);
+    const newPW = Number(this.user['RestaurantPassword']);
     if (isNaN(newPW) || newPW >= 1000000) {
-      alert("New password must be at most 6 numbers long and cannot contain characters other than 0-9");
+      alert('New password must be at most 6 numbers long and cannot contain characters other than 0-9');
       return;
     }
     this.user['RestaurantPassword'] = newPW;
@@ -74,34 +74,34 @@ export class AccountComponent implements OnInit {
         this.menuItems = new MatTableDataSource(this.menu['MenuItems']);
         this.menuItems.sort = this.sort;
       }).catch((response) => {
-        alert("No menu found");
+        alert('No menu found');
       });
     }
   }
 
   updateMenuItem(row) {
-    console.log(row);
+    // console.log(row);
     this.http.putRequest('/updateMenuItem', row).then((res) => {
       alert('Updated');
     }).catch((res) => {
-      alert('Error occured, try again later');
+      alert('Error occurred, try again later');
     });
   }
 
   deleteMenuItem(menuItemID) {
     this.http.deleteRequest('/deleteMenuItem', { MenuItemID: menuItemID }).then(() => {
-      alert('Deleted')
+      alert('Deleted');
     }).catch(() => {
-      alert('Error occured, try again later');
+      alert('Error occurred, try again later');
     });  }
 
   addNewItem() {
-    console.log(this.newItem);
+    // console.log(this.newItem);
     this.newItem['MenuID'] = this.menu['MenuID'];
     this.http.postRequest('/addMenuItem', this.newItem).then(() => {
-      alert('Added')
+      alert('Added');
     }).catch(() => {
-      alert('Error occured, try again later');
+      alert('Error occurred, try again later');
     });
   }
 }

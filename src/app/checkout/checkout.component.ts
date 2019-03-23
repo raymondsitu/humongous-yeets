@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CartService} from '../cart.service';
 
 @Component({
@@ -11,6 +11,7 @@ export class CheckoutComponent implements OnInit {
   public displayedColumns = ['item', 'quantity', 'price', 'edit'];
   public tip = 0;
   public instructions: string;
+  @Input() username: string;
 
   constructor(private cartService: CartService) {
   }
@@ -27,7 +28,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getFinalCost(): number {
-    return this.getTotalCost() + this.tip;
+    return this.getTotalCost() + this.tip + this.getDeliveryFee();
   }
 
   getItemCount(): number {
@@ -41,12 +42,17 @@ export class CheckoutComponent implements OnInit {
   removeAll(): void {
     this.cartService.emptyCart();
     this.selectedItems = [];
+    this.tip = 0;
   }
 
   checkout(): void {
     // send instructions as well
+    this.cartService.checkout(this.username, this.tip);
     this.removeAll();
-    this.cartService.checkout();
+  }
+
+  getDeliveryFee(): number {
+    return this.cartService.getDeliveryFee();
   }
 
 }
