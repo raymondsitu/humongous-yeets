@@ -326,6 +326,19 @@ def updateCreditCard():
         return jsonify("updateCreditCard: Error in backend database")
     return jsonify('Successfully updated Credit Card {} with {} {} {} {}'.format(ccNo, bAdd, dExp, name, cusUser))
 
+# Delete menu item
+@app.route("/deleteMenuItem", methods=["DELETE"])
+def deleteMenuItem():
+    try:
+        menuItemID = request.args.get('MenuItemID')
+        # menuItemID = parseInt(menuItemID)
+        print(menuItemID)
+        query = 'DELETE FROM project.MenuItem WHERE MenuItemID = {}'.format(menuItemID)
+        print(query)
+        result = engine.execute(query)
+    except Exception as e:
+        return jsonify("deleteMenuItem: Error")
+    return jsonify('Successfully deleted menu item {}').format(menuItemID)
 if __name__ == '__main__':
     app.run(debug=True)
 
