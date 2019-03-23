@@ -9,6 +9,8 @@ import {CartService} from '../cart.service';
 export class CheckoutComponent implements OnInit {
   public selectedItems: any[] = [];
   public displayedColumns = ['item', 'quantity', 'price', 'edit'];
+  public tip = 0;
+  public instructions: string;
 
   constructor(private cartService: CartService) {
   }
@@ -21,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getTotalCost(): number {
-    return this.cartService.getTotalCost();
+    return this.cartService.getTotalCost() + this.tip;
   }
 
   getItemCount(): number {
@@ -38,6 +40,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkout(): void {
+    // send instructions as well
     this.cartService.checkout();
   }
 

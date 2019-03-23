@@ -37,6 +37,28 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </mat-table>
+
+  <div class="additional" style="padding-top: 10px">
+    <form class="example-form">
+      <mat-form-field style="width: 400px">
+        <textarea matInput
+                  [(ngModel)]="instructions"
+                  placeholder="Special Instructions"></textarea>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field>
+        <span matPrefix>$ &nbsp;</span>
+        <input type="number"
+               min="0"
+               step="0.01"
+               matInput
+               [(ngModel)]="tip"
+               placeholder="Tip">
+      </mat-form-field>
+    </form>
+  </div>
+
   <div class="checkout" style="padding-top: 15px">
     <button mat-raised-button class="checkout-button" style="margin-right: 10px;">
       <mat-icon style="margin-right: 3px;">cake</mat-icon>
