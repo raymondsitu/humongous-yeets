@@ -107,7 +107,6 @@ create table MenuItem (
 	Price REAL,
 	Calories integer,
 	Description char(100),
-	Rating integer,
 	PRIMARY KEY (MenuItemID),
 	FOREIGN KEY (MenuID) REFERENCES	Menu(MenuID) ON DELETE CASCADE
 );
@@ -188,11 +187,11 @@ VALUES ("2019-02-18", TIME("11:22"), 24.00, 8, 1.00, "delivered", "2630 West Mal
 INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
 VALUES ("2019-02-24", TIME("11:10"), 5.00, 4, 1.00, "order made", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "hughmungus","0808-9797-6565-2323","Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", 5);
 
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Big Mac", 1, 5.00, 550, "burger 2 patties", 3.9);
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Salmon Sashimi",2, 22.25, 500, "fresh fish", 4.6);
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Cheese Pizza Slice", 3, 3.00, 340, "cheese pizza with chedder", 4.2);
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Shio Ramen", 4, 12.00, 750, "ramen noodles with pork", 4.5);
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description, Rating) VALUES ("Cheese Pizza Slice", 5, 2.50, 370, "a slice of cheese pizza", 3.9);
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Big Mac", 1, 5.00, 550, "burger 2 patties");
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Salmon Sashimi",2, 22.25, 500, "fresh fish");
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Cheese Pizza Slice", 3, 3.00, 340, "cheese pizza with chedder");
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Shio Ramen", 4, 12.00, 750, "ramen noodles with pork");
+INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Cheese Pizza Slice", 5, 2.50, 370, "a slice of cheese pizza");
 
 INSERT INTO OrderedMenuItem VALUES (1, 1, 2, "no pickles");
 INSERT INTO OrderedMenuItem VALUES (2, 2, 1, "");

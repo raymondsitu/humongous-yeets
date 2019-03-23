@@ -282,15 +282,14 @@ def updateRestaurant():
     name = params["Name"]
     location = params["Location"]
     category = params["Category"]
-    rating = params["Rating"] #int
     deliveryFee = params["DeliveryFee"] #real
     restaurantPassword = params["RestaurantPassword"] #int
-    query = 'UPDATE project.Restaurant SET Name = "{}", Location = "{}", Category = "{}", Rating = {}, DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, rating, deliveryFee, restaurantPassword, restaurantID)
+    query = 'UPDATE project.Restaurant SET Name = "{}", Location = "{}", Category = "{}", DeliveryFee = {}, RestaurantPassword = {} WHERE RestaurantID = {};'.format(name, location, category, deliveryFee, restaurantPassword, restaurantID)
     try:
         result = engine.execute(query)
     except Exception as e:
         return jsonify("updateRestaurant: Error in backend database")
-    return jsonify('Successfully updated Restaurant {} with {} {} {} {} {} {}'.format(restaurantID, name, location, category, rating, deliveryFee, restaurantPassword))
+    return jsonify('Successfully updated Restaurant {} with {} {} {} {} {}'.format(restaurantID, name, location, category, deliveryFee, restaurantPassword))
 
 # Update a menu item
 @app.route("/updateMenuItem", methods=["PUT"])
@@ -307,7 +306,7 @@ def updateMenuItem():
         result = engine.execute(query)
     except Exception as e:
         return jsonify("updateMenuItem: Error in backend database")
-    return jsonify('Successfully updated MenuItem {} with {} {} {} {} {}'.format(menuItemID, name, menuID, price, calories, description)
+    return jsonify('Successfully updated MenuItem {} with {} {} {} {} {}'.format(menuItemID, name, menuID, price, calories, description))
 
 # Update credit card
 @app.route("/updateCreditCard", methods=["PUT"])
