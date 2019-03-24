@@ -1,3 +1,37 @@
-<p>
-  orders works!
-</p>
+<div>
+
+<div id = "outterDateInput">
+<input id="dateinput" type="text" ngxDaterangepickerMd
+[(ngModel)]="selected" placeholder="Choose date range" (change)="searchOrdersBetween($event)"/>
+</div>
+
+  <mat-table [dataSource]="orders" matSort matSortActive="Rating" matSortDirection="desc">
+    <ng-container matColumnDef="Date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.Date }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="OrderID">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>OrderID</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.OrderID }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.Status }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="DeliveryPersonName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>DeliveryPersonName</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.DeliveryPersonName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Price">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.Price | currency }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

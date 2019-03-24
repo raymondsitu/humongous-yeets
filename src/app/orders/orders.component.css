@@ -1,0 +1,19 @@
+.mat-form-field{
+	padding: 50px;
+}
+.mat-table{
+	
+	 z-index: -1;
+}
+
+#dateinput{
+	left:0px;
+	display: inline-block !important;
+	width: 250px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.mat-table[_ngcontent-c7]{
+	min-height: 500px;
+}

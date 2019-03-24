@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from "@angular/material";
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatTableModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatTabsModule, MatSortModule,
@@ -18,6 +20,7 @@ import {
 import { CheckoutComponent } from './checkout/checkout.component';
 import {CartService} from './cart.service';
 import {UserService} from './user.service';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import {UserService} from './user.service';
     MenuComponent,
     AccountComponent,
     BrowseComponent,
-    CheckoutComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,10 @@ import {UserService} from './user.service';
     MatMenuModule,
     MatIconModule,
     MatSelectModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxDaterangepickerMd.forRoot()
   ],
   providers: [CartService,
     UserService],
