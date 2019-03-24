@@ -19,8 +19,7 @@ export class AppComponent {
   constructor(private http: HttpService,
               private userService: UserService,
               private cartService: CartService) {
-
-    http.getRequest('/', {}).then((res) => console.log(res['response']) );
+    // http.getRequest('/', {}).then((res) => console.log(res['response']) );
   }
 
   login(): void {
@@ -33,7 +32,7 @@ export class AppComponent {
     this.http.getRequest(
       '/login', { 'username' : this.username, 'password': this.password }
       ).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.response === 'not found') {
           alert('Invalid username or password');
         } else {

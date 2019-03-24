@@ -57,10 +57,14 @@
       </mat-form-field>
   </div>
   <div class="finalcost" style="padding: 50px 20px">
+    Delivery Fee: {{getDeliveryFee() | currency}}
+    <br>
+    <br>
+    <br>
     Final cost: {{getFinalCost() | currency}}
   </div>
   <div class="checkout" style="padding-top: 15px">
-    <button mat-raised-button class="checkout-button" style="margin-right: 10px;">
+    <button mat-raised-button class="checkout-button" style="margin-right: 10px;" (click)="checkout()">
       <mat-icon style="margin-right: 3px;">cake</mat-icon>
       Checkout
     </button>
