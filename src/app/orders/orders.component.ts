@@ -3,6 +3,7 @@ import {HttpService} from '../http.service';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {CartService} from '../cart.service';
 import {Moment} from 'moment';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-orders',
@@ -12,32 +13,49 @@ import {Moment} from 'moment';
 export class OrdersComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
-  CustomerUsername: string = "rsitu";
+
+  usertype: string;
+  user: any;
+  username: string;
   orders: MatTableDataSource<any>;
   displayedColumns = ['Date', 'OrderID', 'Status', 'DeliveryPersonName', 'Price'];
   selected: {startDate: Moment, endDate: Moment};
   startDate: string;
   endDate:string;
 
-  constructor(private http: HttpService) {
-    this.http.getRequest('/getOrdersBetween', {CustomerUsername: this.CustomerUsername, DateFrom: "2019-01-10", DateTo: "2019-03-10"}).then((orders) => {
-      this.orders = new MatTableDataSource(orders);
-    });
-    console.log("wthy");
+  constructor(private http: HttpService,private userService: UserService) {
   }
 
   searchOrdersBetween(): void {
-  console.log("waesfaefaweawefawefaew");
   this.startDate = (this.selected? (this.selected.startDate).format("YYYY-MM-DD"): "2019-01-10");
   this.endDate = (this.selected? (this.selected.endDate).format("YYYY-MM-DD"): "2019-01-10");
-    this.http.getRequest('/getOrdersBetween', {CustomerUsername: this.CustomerUsername, DateFrom: this.startDate, DateTo: this.endDate}).then((orders) => {
+
+  if(this.usertype === 'customer'){
+    this.http.getRequest('/getOrdersBetween', {CustomerUsername: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((orders) => {
       this.orders = new MatTableDataSource(orders);
     }).catch((response) => {
       alert('No restaurants found');
     });
+    } else {
+     this.http.getRequest('/getOrdersBetweenRestaurant', {RestaurantID: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((orders) => {
+      this.orders = new MatTableDataSource(orders);
+    }).catch((response) => {
+      alert('No restaurants found');
+    });
+
+    }
   }
 
   ngOnInit() {
-
+    this.usertype = this.userService.getUsertype();
+    if (this.usertype !== 'admin') {
+      this.user = this.userService.getUser();
+      console.log("this.user", this.user);
+      if (this.usertype === 'customer') {
+        this.username = this.user['CustomerUsername'];
+      } else {
+        this.username = this.user['RestaurantID'];
+      }
+    }
   }
 }
