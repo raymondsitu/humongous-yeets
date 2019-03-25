@@ -204,8 +204,24 @@ def getOrdersBetween():
       response.append(ordersBetween)
   return jsonify(response)
 
-# Get array of all orders still in progress
-
+# Get orders between for restuarant owner
+@app.route("/getOrdersBetweenRestaurant")
+def getOrdersBetweenRestaurant():
+  restaurantID = request.args.get('RestaurantID')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT * FROM project.RestaurantOrder WHERE restaurantID = {} AND Date >= "{}" AND Date <= "{}"'.format(restaurantID, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return jsonify("No orders found between these dates")
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['Date'] = str(ordersBetween['Date'])
+      ordersBetween['Time'] = str(ordersBetween['Time'])
+      response.append(ordersBetween)
+  return jsonify(response)
 # ====================================== POST endpoints ====================================
 
 # Given all the fields in a POST form, create a new customer
