@@ -11,7 +11,7 @@ export class UserService {
   constructor() {}
 
   setUsertype(usertype) {
-    this.usertype = usertype
+    this.usertype = usertype;
   }
 
   setUser(user) {
@@ -19,7 +19,7 @@ export class UserService {
   }
 
   getUsertype() {
-    return this.usertype
+    return this.usertype;
   }
 
   getUser() {

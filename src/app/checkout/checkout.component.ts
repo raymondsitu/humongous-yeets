@@ -47,7 +47,7 @@ export class CheckoutComponent implements OnInit {
 
   checkout(): void {
     // send instructions as well
-    this.cartService.checkout(this.username, this.tip);
+    this.cartService.checkout(this.username, this.tip, this.instructions);
     this.removeAll();
   }
 

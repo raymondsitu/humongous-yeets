@@ -57,28 +57,27 @@ export class CartService {
     return quantity.reduce((a, b) => a + b, 0);
   }
 
-  checkout(user: string, tip: number): void {
-    let orderedItems = [];
-    let info = {};
-    for (let key of Object.keys(this.selectedItems)) {
-      let item = {};
+  checkout(user: string, tip: number, instructions: string): void {
+    const orderedItems = [];
+    const info = {};
+    for (const key of Object.keys(this.selectedItems)) {
+      const item = {};
       item['MenuItemId'] = key;
       item['quantity'] = this.selectedItems[key]['Quantity'];
       orderedItems.push(item);
     }
-    info['Price'] = null;
+    info['Price'] = this.getTotalCost();
     info['TipAmount'] = tip;
-    info['Location'] = null;
     info['CustomerUsername'] = user;
-    info['CreditCardNumber'] = null;
     info['RestaurantID'] = this.currentRestaurant;
+    info['SpecialInstructions'] = instructions;
     const body: any = {RestaurantsOrderedFrom: info, OrderedItems: orderedItems};
-    // this.http.postRequest('/addOrder', body)
-    //   .then((res) => {
-    //   alert('Your order has been sent');
-    //   })
-    //   .catch((e) => console.log(e)
-    //   );
+    this.http.postRequest('/addOrder', body)
+      .then((res) => {
+      alert('Your order has been successfully sent');
+      })
+      .catch((e) => console.log(e)
+      );
   }
 
   setDeliveryFee(restaurantID: string, fee: number): boolean {
