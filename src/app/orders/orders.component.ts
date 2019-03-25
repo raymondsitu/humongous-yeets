@@ -27,22 +27,32 @@ export class OrdersComponent implements OnInit {
   }
 
   searchOrdersBetween(): void {
-  this.startDate = (this.selected? (this.selected.startDate).format("YYYY-MM-DD"): "2019-01-10");
-  this.endDate = (this.selected? (this.selected.endDate).format("YYYY-MM-DD"): "2019-01-10");
+  this.startDate = (this.selected? (this.selected.startDate).format("YYYY-MM-DD"): "");
+  this.endDate = (this.selected? (this.selected.endDate).format("YYYY-MM-DD"): "");
 
+  if(this.startDate != "" && this.endDate != ""){
   if(this.usertype === 'customer'){
     this.http.getRequest('/getOrdersBetween', {CustomerUsername: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((orders) => {
+      if(typeof(orders) != "string"){
       this.orders = new MatTableDataSource(orders);
+      } else {
+      alert(orders);
+      }
     }).catch((response) => {
       alert('No restaurants found');
     });
     } else {
      this.http.getRequest('/getOrdersBetweenRestaurant', {RestaurantID: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((orders) => {
+     if(typeof(orders) != "string"){
       this.orders = new MatTableDataSource(orders);
+      }else {
+      alert(orders);
+      }
     }).catch((response) => {
       alert('No restaurants found');
     });
 
+    }
     }
   }
 
