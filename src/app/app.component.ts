@@ -47,4 +47,8 @@ export class AppComponent {
   getNumItems(): number {
     return this.cartService.getTotalNumberItems();
   }
+
+  logout(): void {
+    window.location.reload();
+  }
 }

@@ -1,12 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-
-  <h1 style="padding-bottom: 5%">
-    Humongous
-  <span style="color: royalblue">
-    Yeets
-  </span>
-  </h1>
+  <div>
+    <h1 style="padding-bottom: 5%">
+      Humongous
+      <span style="color: royalblue">Yeets</span>
+    </h1>
+    <div *ngIf="loggedin">
+      <button mat-flat-button color="warn" (click)="logout()"
+              style="position: absolute;
+                      top: 0;
+                      right: 0;
+                      margin-top: 20px;
+                      margin-right: 20px;">
+        Logout
+      </button>
+    </div>
+  </div>
 
   <div *ngIf="!loggedin" style="text-align: center">
     <mat-card class="login-card" style="width: 40%; background-color: #F5F5F5; padding-top: 2%">
