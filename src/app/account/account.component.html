@@ -69,6 +69,7 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Calories"
+                 type="number"
                  [(ngModel)]="newItem['Calories']" name="category">
         </mat-form-field>
         <mat-form-field>
@@ -81,7 +82,7 @@
     </div>
 
     <div id="myRestaurantMenu">
-      <button id="toggleMenu" mat-button (click)="toggleMenu()" color="primary">Show Menu</button>
+      <button id="toggleMenu" mat-raised-button (click)="toggleMenu()" color="primary">Show Menu</button>
       <div *ngIf="showMenu">
         <mat-table [dataSource]="menuItems" matSort>
           <ng-container matColumnDef="Name">
@@ -110,14 +111,14 @@
           <ng-container matColumnDef="Update">
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button id="updateMenuItem" mat-button (click)="updateMenuItem(row)" color="primary">Update</button>
+              <button id="updateMenuItem" mat-raised-button (click)="updateMenuItem(row)" color="primary">Update</button>
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Delete">
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button id="updateMenuItem" mat-button (click)="deleteMenuItem(row.MenuItemID)" color="primary">Delete</button>
+              <button id="updateMenuItem" mat-raised-button (click)="deleteMenuItem(row.MenuItemID)" color="primary">Delete</button>
             </mat-cell>
           </ng-container>
 
