@@ -187,11 +187,55 @@ VALUES ("2019-02-18", TIME("11:22"), 24.00, 8, 1.00, "delivered", "2630 West Mal
 INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
 VALUES ("2019-02-24", TIME("11:10"), 5.00, 4, 1.00, "order made", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "hughmungus","0808-9797-6565-2323","Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", 5);
 
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Big Mac", 1, 5.00, 550, "burger 2 patties");
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Salmon Sashimi",2, 22.25, 500, "fresh fish");
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Cheese Pizza Slice", 3, 3.00, 340, "cheese pizza with chedder");
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Shio Ramen", 4, 12.00, 750, "ramen noodles with pork");
-INSERT INTO MenuItem (Name, MenuID, Price, Calories, Description) VALUES ("Cheese Pizza Slice", 5, 2.50, 370, "a slice of cheese pizza");
+INSERT INTO `MenuItem` VALUES (1,'Big Mac',1,3.99,509,'Two 100 percent beef patties'),
+(2,'Salmon Sashimi',2,22.25,500,'fresh fish'),
+(3,'Cheese Pizza Slice',3,1.99,340,'cheese pizza with chedder'),
+(4,'Shio Ramen',4,12,750,'ramen noodles with pork in salt broth'),
+(5,'Cheese Pizza Slice',5,2.5,370,'a slice of cheese pizza'),
+(6,'Bacon Clubhouse Beef',1,5.99,673,'Has good bacon'),
+(7,'Quarter Pounder with Cheese',1,3.99,527,'Two slices of melted cheddar cheese and more'),
+(8,'McChicken',1,3.99,426,'Our 100 percent chicken breast patty in a crispy coating'),
+(9,'Double Cheeseburger',1,1.99,442,'Two 100 percent pure beef patties and cheddar'),
+(10,'Filet-o-Fish',1,3.99,333,'Savour our crispy fish burger'),
+(11,'20 pc. Chicken McNuggets',1,4.99,894,'Better than wedding rings'),
+(12,'Oreo McFlurry',1,1.99,505,'Oreo McFlurry good stuff'),
+(13,'M&M McFlurry',1,1.99,344,'M&M McFlurry good stuff'),
+(14,'Medium Fries',1,1.99,341,'Nice salted fries'),
+(15,'Large Fries',1,2.49,448,'Nice salted fries'),
+(16,'Miso Soup',2,4,70,'green onion, enoki mushroom, wakame'),
+(17,'Nutrigreens Farm Tofu Salad',2,15,200,'organic baby greens'),
+(18,'Nutrigreens Farm Tofu Salad',2,15,200,'organic baby greens'),
+(19,'Kaiso Seaweed Salad',2,18,250,'nutrigreens farm organic greens'),
+(20,'Calamari',2,18,550,'squid in tempura batter, pickled beet and cucumber'),
+(21,'Steamed Edamame',2,7,180,'sea salt'),
+(22,'Miku Waterfront Platter',2,105,700,'chef\'s selection of sashimi, fresh oysters, mussels, prawns, clams, etc.'),
+(23,'AAA Sterling Silver Prime Rib',2,45,1050,'10oz, 5 hour sous-vide, brown butter wasabi sauce'),
+(24,'Dessert Platter',2,49,700,'our pastry chef\'s selection of four desserts'),
+(25,'Meat Lovers Feast',3,14.99,2560,'lots of meat'),
+(26,'Pepperoni Feast',3,11.99,2010,'lots of pepperoni'),
+(27,'Combo Feast',3,12.99,1805,'meat and vegetables'),
+(28,'Hawaiian Feast',3,12.99,1950,'ham and pineapples'),
+(29,'BBQ Chicken Bacon Feast',3,12.99,2100,'chicken and bbq sauce'),
+(30,'Butter Chicken Feast',3,12.99,2250,'butter chicken on pizza'),
+(31,'Pesto Feast',3,12.99,2100,'pesto sauce'),
+(32,'Veggie Feast',3,12.99,1900,'lots of veggies'),
+(33,'Shoyu Ramen',4,12,780,'ramen noodles with pork in soy broth'),
+(34,'Miso Ramen',4,13,790,'ramen noodles with pork in miso broth'),
+(35,'Spicy Miso Ramen',4,14,810,'ramen noodles with pork in spicy miso broth'),
+(36,'Tokusen Toroniku Ramen',4,18,900,'ramen noodles with roasted pork cheeks'),
+(37,'Negimeshi',4,6,350,'rice with green onion'),
+(38,'Hanjuku Tamago',4,2,90,'soft boiled egg'),
+(39,'Yaki Gyoza',4,6,400,'Fried dumpling'),
+(40,'BBQ Chicken',5,14.99,2100,'bbq base, chicken, red pepper, mushroom cheddar'),
+(41,'BBQ Pulled Pork',5,14.99,2150,'bbq base, pulled pork, mushroom cheddar'),
+(42,'Chipotle Chicken',5,14.99,2250,'chipotle base, chicken, onion, etc'),
+(43,'Beef and Blue Cheese',5,14.99,2300,'ground beef and blue cheese'),
+(44,'Canadian',5,14.99,2200,'bacon mushroom and cheddar'),
+(45,'Eggplant Artichoke',5,13.99,1900,'roasted eggplant, artichoke, pesto'),
+(46,'Fresh Tomato and Feta',5,13.99,1950,'green pepper, mushroom, tomato and feta'),
+(47,'Mixed Veggie',5,13.99,2000,'black olive, green pepper, mushroom, onion');
+
+
 
 INSERT INTO OrderedMenuItem VALUES (1, 1, 2, "no pickles");
 INSERT INTO OrderedMenuItem VALUES (2, 2, 1, "");
