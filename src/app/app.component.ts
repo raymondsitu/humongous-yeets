@@ -15,6 +15,7 @@ export class AppComponent {
   username: string;
   password: string;
   usertype: string;
+  customerType: boolean;
 
   constructor(private http: HttpService,
               private userService: UserService,
@@ -38,6 +39,11 @@ export class AppComponent {
         } else {
           this.loggedin = true;
           this.usertype = res[0];
+          if(this.usertype === 'customer') {
+          this.customerType = true;
+          } else {
+          this.customerType = false;
+          }
           this.userService.setUsertype(res[0]);
           this.userService.setUser(res[1]);
         }
