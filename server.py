@@ -134,6 +134,20 @@ def getMenus():
         response.append(menu)
     return jsonify(response)
 
+# Get all credit cards that belong to customer in the DB
+@app.route("/getCreditCards")
+def getCreditCards():
+    customerUsername = request.args.get('CustomerUsername')
+    query = 'SELECT * FROM project.CreditCard WHERE CustomerUsername = "{}";'.format(customerUsername)
+    response = []
+    result = engine.execute(query)
+    if result.rowcount == 0:
+        return jsonify("No credit cards found")
+    for row in result:
+        menu = dict(row)
+        response.append(menu)
+    return jsonify(response)
+
 @app.route("/getMenu")
 def getMenu():
   try:
@@ -271,6 +285,23 @@ def addMenuItem():
     except Exception as e:
         return jsonify("addMenuItem: Error in backend database")
     return jsonify('Successfully added {} {} {} {} {})'.format(name, menuID, price, calories, description))
+
+# Creates an order
+@app.route("/addOrder", methods=["POST"])
+def addOrder():
+  params = request.get_json()
+  restaurant = params['RestaurantOrderedFrom']
+  price = restaurant['Price']
+  tip = restaurant['TipAmount']
+  loc = restaurant['Location']
+  special = restaurant['SpecialInstructions']
+  user = restaurant['CustomerUsername']
+  restID = restaurant['RestaurantID']
+
+  orderedItems = params["OrderedItems"]
+  ccNoQuery = 'SELECT CreditCardNumber FROM project.Customer'
+
+
 
 # ==================================== PUT endpoints =======================================
 
