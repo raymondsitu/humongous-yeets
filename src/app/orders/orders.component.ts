@@ -22,7 +22,6 @@ export class OrdersComponent implements OnInit {
   selected: {startDate: Moment, endDate: Moment};
   startDate: string;
   endDate:string;
-  PriceAvg: string = "0";
 
   constructor(private http: HttpService,private userService: UserService) {
   }
@@ -42,16 +41,6 @@ export class OrdersComponent implements OnInit {
     }).catch((response) => {
       alert('No restaurants found');
     });
-
-    this.http.getRequest('/getAvgOrder', {CustomerUsername: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((avg) => {
-      if(typeof(avg) != "string"){
-      console.log("avg", avg);
-      this.PriceAvg = avg[0]['avgPrice'];
-      }
-    }).catch((response) => {
-      alert('No restaurants found');
-    });
-
     } else {
      this.http.getRequest('/getOrdersBetweenRestaurant', {RestaurantID: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((orders) => {
      if(typeof(orders) != "string"){
@@ -63,21 +52,7 @@ export class OrdersComponent implements OnInit {
       alert('No restaurants found');
     });
 
-    this.http.getRequest('/getAvgOrderRestaurant', {RestaurantID: this.username, DateFrom: this.startDate, DateTo: this.endDate}).then((avg) => {
-      if(typeof(avg) != "string"){
-      console.log("avg", avg);
-      this.PriceAvg = avg[0]['avgPrice'];
-      }
-    }).catch((response) => {
-      alert('No restaurants found');
-    });
-
     }
-
-    
-
-
-
     }
   }
 

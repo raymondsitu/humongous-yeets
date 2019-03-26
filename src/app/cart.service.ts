@@ -36,16 +36,13 @@ export class CartService {
       this.currentRestaurant = null;
       this.deliveryFee = 0;
     }
-    this.cartUpdated.emit(this.getSelectedItems());
   }
 
   emptyCart(): void {
     this.selectedItems = {};
     this.deliveryFee = 0;
     this.currentRestaurant = null;
-    this.cartUpdated.emit(this.getSelectedItems());
   }
-
   getSelectedItems(): any[] {
     return Object.values(this.selectedItems);
   }
@@ -60,13 +57,13 @@ export class CartService {
     return quantity.reduce((a, b) => a + b, 0);
   }
 
-  checkout(user: string, tip: number, instructions: string, card: any): void {
+  checkout(user: string, tip: number, instructions: string): void {
     const orderedItems = [];
     const info = {};
     for (const key of Object.keys(this.selectedItems)) {
       const item = {};
-      item['MenuItemID'] = key;
-      item['Quantity'] = this.selectedItems[key]['Quantity'];
+      item['MenuItemId'] = key;
+      item['quantity'] = this.selectedItems[key]['Quantity'];
       orderedItems.push(item);
     }
     info['Price'] = this.getTotalCost();
@@ -74,17 +71,12 @@ export class CartService {
     info['CustomerUsername'] = user;
     info['RestaurantID'] = this.currentRestaurant;
     info['SpecialInstructions'] = instructions;
-    console.log(card);
-    info['CreditCardNumber'] = card;
-    const body: any = {RestaurantOrderedFrom: info, OrderedItems: orderedItems};
+    const body: any = {RestaurantsOrderedFrom: info, OrderedItems: orderedItems};
     this.http.postRequest('/addOrder', body)
       .then((res) => {
-        alert('Your order has been successfully sent');
-        this.emptyCart();
+      alert('Your order has been successfully sent');
       })
-      .catch((e) => {
-          alert('order failed please check info again');
-      }
+      .catch((e) => console.log(e)
       );
   }
 
