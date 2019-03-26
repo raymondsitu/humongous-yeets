@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 h1 {
   color: black;
-  font-family: Arial;
+  margin-top: 0;
+  padding-bottom: 2%;
+  padding-top: 2%;
 }
 
 .login-card {
@@ -39,3 +43,15 @@ html {
   background: #FF0000;
 }
 
+body {
+  margin: 0;
+}
+
+#appHeader {
+  background-image: linear-gradient(to bottom, lightcyan, white);
+  margin-bottom: 30px;
+}
+
+html * {
+  font-family: 'Roboto', sans-serif;
+}
