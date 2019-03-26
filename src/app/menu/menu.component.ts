@@ -42,7 +42,7 @@ export class MenuComponent implements OnInit {
     let amount = +quantity;
     const result: boolean = this.cartService.setDeliveryFee(this.restaurantID, this.deliveryFee);
     if (result) {
-      if (!isNaN(amount)) {
+      if (!isNaN(amount) && amount >= 1 && Number.isInteger(amount)) {
         this.cartService.addItem(row, amount);
       }
     } else {
