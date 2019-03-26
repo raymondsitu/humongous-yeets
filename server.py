@@ -350,7 +350,7 @@ def addOrder():
 
     params = request.get_json()
     print(params)
-    restaurant = params['RestaurantOrderedFrom']
+    restaurant = params['RestaurantsOrderedFrom']
     orderedItems = params["OrderedItems"]
 
     # RestaurantOrder params
