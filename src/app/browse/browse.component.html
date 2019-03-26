@@ -4,7 +4,6 @@
     <input matInput placeholder="Restaurant name..."
            (keydown.enter)="searchRestaurants()"
            [(ngModel)]="restaurantName" name="restaurantName"
-           required
            style="font-size:18px;">
   </mat-form-field>
   <mat-table [dataSource]="restaurants" matSort matSortActive="Rating" matSortDirection="desc">
