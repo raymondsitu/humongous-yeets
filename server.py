@@ -220,6 +220,23 @@ def getOrdersBetween():
       response.append(ordersBetween)
   return jsonify(response)
 
+@app.route("/getAvgOrder")
+def getAvgOrder():
+  customerUsername = request.args.get('CustomerUsername')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT CustomerUsername, AVG(Price) As avgPrice FROM project.RestaurantOrder WHERE CustomerUsername = "{}" AND Date >= "{}" AND Date <= "{}" GROUP BY CustomerUsername'.format(customerUsername, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return jsonify("No orders found between these dates")
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['avgPrice'] = str(ordersBetween['avgPrice'])
+      response.append(ordersBetween)
+  return jsonify(response)
+
 # Get orders between for restuarant owner
 @app.route("/getOrdersBetweenRestaurant")
 def getOrdersBetweenRestaurant():
@@ -236,6 +253,23 @@ def getOrdersBetweenRestaurant():
       ordersBetween = dict(row)
       ordersBetween['Date'] = str(ordersBetween['Date'])
       ordersBetween['Time'] = str(ordersBetween['Time'])
+      response.append(ordersBetween)
+  return jsonify(response)
+
+@app.route("/getAvgOrderRestaurant")
+def getAvgOrderRestaurant():
+  restaurantID = request.args.get('RestaurantID')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT restaurantID, AVG(Price) As avgPrice FROM project.RestaurantOrder WHERE restaurantID = "{}" AND Date >= "{}" AND Date <= "{}" GROUP BY restaurantID'.format(restaurantID, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return jsonify("No orders found between these dates")
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['avgPrice'] = str(ordersBetween['avgPrice'])
       response.append(ordersBetween)
   return jsonify(response)
 # ====================================== POST endpoints ====================================
