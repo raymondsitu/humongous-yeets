@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CartService} from '../cart.service';
+import {HttpService} from '../http.service';
 
 @Component({
   selector: 'app-checkout',
@@ -8,18 +9,28 @@ import {CartService} from '../cart.service';
 })
 export class CheckoutComponent implements OnInit {
   public selectedItems: any[] = [];
+  public cards: any[];
   public displayedColumns = ['item', 'quantity', 'price', 'edit'];
   public tip = 0;
-  public instructions: string;
+  public instructions = '';
+  public selectedCard;
   @Input() username: string;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private http: HttpService) {
   }
 
   ngOnInit() {
     this.selectedItems = this.cartService.getSelectedItems();
     this.cartService.cartUpdated.subscribe((cart) => {
       this.selectedItems = this.cartService.getSelectedItems();
+      if (this.selectedItems.length === 0) {
+        this.selectedCard = '';
+        this.instructions = '';
+        this.tip = 0;
+      }
+    });
+    this.http.getRequest('/getCreditCards', {CustomerUsername: this.username}).then((data) => {
+      this.cards = data;
     });
   }
 
@@ -39,16 +50,16 @@ export class CheckoutComponent implements OnInit {
     this.cartService.removeItem(id);
   }
 
-  removeAll(): void {
-    this.cartService.emptyCart();
-    this.selectedItems = [];
-    this.tip = 0;
-  }
-
   checkout(): void {
-    // send instructions as well
-    this.cartService.checkout(this.username, this.tip, this.instructions);
-    this.removeAll();
+    if (this.selectedItems.length === 0) {
+      alert('cart empty');
+      return;
+    }
+    if (this.selectedCard === null || this.selectedCard === undefined || this.selectedCard === '') {
+      alert('please pick a credit card from the dropdown');
+      return;
+    }
+    this.cartService.checkout(this.username, this.tip, this.instructions, this.selectedCard);
   }
 
   getDeliveryFee(): number {
