@@ -289,6 +289,8 @@ def getBestSellers():
     response.append(bestItem)
   return jsonify(response)
 
+# Gets items
+
 # ====================================== POST endpoints ====================================
 
 # Given all the fields in a POST form, create a new customer
@@ -374,7 +376,12 @@ def addOrder():
     restID = restaurant['RestaurantID']
     special = restaurant['SpecialInstructions']
     # loc = restaurant['Location']
-    loc = 'hehexd'
+    locResult = engine.execute('SELECT Address FROM Customer WHERE CustomerUsername = "{}";'.format(user))
+    locResult = locResult.first()
+    locResult = dict(locResult)
+    print('-----------------------------------------------------------------')
+    print(locResult)
+    loc = locResult['Address']
     # TODO this needs to query the restaurants using the restID
     query = 'INSERT INTO project.RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)\
             VALUES ("{}", "{}", {}, {}, {}, "{}", "{}", "{}", "{}", "{}", "{}", {}, "{}");'.format(date, time, price, distance, tip, status, loc, user, ccNo, deliveryName, deliveryAddress, restID, special)
@@ -387,13 +394,10 @@ def addOrder():
         idResult = dict(idResult)
         orderID = idResult['Max(OrderID)']
         for item in orderedItems:
-            print(item)
-            print('------------------------------------------------')
             menuItemID = item['MenuItemID']
             quantity = item['Quantity']
             insertQuery = 'INSERT INTO project.OrderedMenuItem VALUES ({}, {}, {});'.format(orderID, menuItemID, quantity)
             print(insertQuery)
-            print('===================')
             engine.execute(insertQuery)
     except Exception as e:
         print("error:")
