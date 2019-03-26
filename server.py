@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from sqlalchemy import *
+from datetime import datetime
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -289,18 +291,62 @@ def addMenuItem():
 # Creates an order
 @app.route("/addOrder", methods=["POST"])
 def addOrder():
-  params = request.get_json()
-  restaurant = params['RestaurantOrderedFrom']
-  price = restaurant['Price']
-  tip = restaurant['TipAmount']
-  loc = restaurant['Location']
-  special = restaurant['SpecialInstructions']
-  user = restaurant['CustomerUsername']
-  restID = restaurant['RestaurantID']
+    # Get a delivery person by joining both Biker and Driver
+    deliveryPerson = engine.execute('SELECT dp.Name, dp.Address, b.MaximumDistance FROM project.DeliveryPerson dp\
+    LEFT OUTER JOIN project.Biker b ON b.Name = dp.Name AND b.Address = dp.Address\
+    LEFT OUTER JOIN project.Driver d ON d.Name = dp.Name AND d.Address = dp.Address\
+    ORDER BY RAND() LIMIT 1;')
+    deliveryPerson = deliveryPerson.first()
+    deliveryPerson = dict(deliveryPerson)
 
-  orderedItems = params["OrderedItems"]
-  ccNoQuery = 'SELECT CreditCardNumber FROM project.Customer'
+    params = request.get_json()
+    print(params)
+    restaurant = params['RestaurantOrderedFrom']
+    orderedItems = params["OrderedItems"]
 
+    # RestaurantOrder params
+    date = datetime.today().strftime('%Y-%m-%d')
+    time = datetime.now().strftime('%H:%M')
+    price = restaurant['Price'] #REAL
+    distance = 0 #int
+    if deliveryPerson["MaximumDistance"] is None:
+        distance = random.randint(1,20)
+    else:
+        distance = deliveryPerson["MaximumDistance"]
+    print(distance)
+    tip = restaurant['TipAmount'] #REAL
+    status = 'delivered'
+    loc = restaurant['Location']
+    user = restaurant['CustomerUsername']
+    ccNo = restaurant['CreditCardNumber']
+    deliveryName = deliveryPerson['Name']
+    deliveryAddress = deliveryPerson['Address']
+    restID = restaurant['RestaurantID']
+    special = restaurant['SpecialInstructions']
+    query = 'INSERT INTO project.RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)\
+            VALUES ("{}", "{}", {}, {}, {}, "{}", "{}", "{}", "{}", "{}", "{}", {}, "{}");'.format(date, time, price, distance, tip, status, loc, user, ccNo, deliveryName, deliveryAddress, restID, special)
+    print(query)
+    print(orderedItems)
+    try:
+        engine.execute(query)
+        idResult = engine.execute('SELECT Max(OrderID) FROM RestaurantOrder;')
+        idResult = idResult.first()
+        idResult = dict(idResult)
+        orderID = idResult['Max(OrderID)']
+        for item in orderedItems:
+            print(item)
+            print('------------------------------------------------')
+            menuItemID = item['MenuItemID']
+            quantity = item['Quantity']
+            insertQuery = 'INSERT INTO project.OrderedMenuItem VALUES ({}, {}, {});'.format(orderID, menuItemID, quantity)
+            print(insertQuery)
+            print('===================')
+            engine.execute(insertQuery)
+    except Exception as e:
+        print("error:")
+        print(e)
+        return jsonify("AddOrder: Backend Server error")
+    return jsonify("AddOrder: success")
 
 
 # ==================================== PUT endpoints =======================================

@@ -83,8 +83,9 @@ create table RestaurantOrder (
 	CustomerUsername char(30) NOT NULL,
 	CreditCardNumber char(20) NOT NULL,
 	DeliveryPersonName char(30) NOT NULL,
-  	DeliveryPersonAddress char(50) NOT NULL,
+  DeliveryPersonAddress char(50) NOT NULL,
 	RestaurantID integer NOT NULL,
+  SpecialInstructions char(100),
 	PRIMARY KEY (OrderID),
 	FOREIGN KEY (CustomerUsername) REFERENCES Customer(CustomerUsername),
 	FOREIGN KEY (CreditCardNumber) REFERENCES 						CreditCard(CreditCardNumber),
@@ -115,7 +116,6 @@ create table OrderedMenuItem (
 	OrderID integer,
 	MenuItemID integer,
 	Quantity integer,
-	SpecialInstructions char(100),
 	PRIMARY KEY (OrderID, MenuItemID),
 	FOREIGN KEY (OrderID) REFERENCES RestaurantOrder(OrderID),
 	FOREIGN KEY (MenuItemID) REFERENCES MenuItem(MenuItemID) ON DELETE CASCADE
@@ -237,9 +237,9 @@ INSERT INTO `MenuItem` VALUES (1,'Big Mac',1,3.99,509,'Two 100 percent beef patt
 
 
 
-INSERT INTO OrderedMenuItem VALUES (1, 1, 2, "no pickles");
-INSERT INTO OrderedMenuItem VALUES (2, 2, 1, "");
-INSERT INTO OrderedMenuItem VALUES (3, 3, 1, "");
-INSERT INTO OrderedMenuItem VALUES (4, 4, 2, "");
-INSERT INTO OrderedMenuItem VALUES (5, 5, 1, "");
+INSERT INTO OrderedMenuItem VALUES (1, 1, 2);
+INSERT INTO OrderedMenuItem VALUES (2, 2, 1);
+INSERT INTO OrderedMenuItem VALUES (3, 3, 1);
+INSERT INTO OrderedMenuItem VALUES (4, 4, 2);
+INSERT INTO OrderedMenuItem VALUES (5, 5, 1);
 
