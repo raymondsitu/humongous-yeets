@@ -220,6 +220,23 @@ def getOrdersBetween():
       response.append(ordersBetween)
   return jsonify(response)
 
+@app.route("/getAvgOrder")
+def getAvgOrder():
+  customerUsername = request.args.get('CustomerUsername')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT CustomerUsername, AVG(Price) As avgPrice FROM project.RestaurantOrder WHERE CustomerUsername = "{}" AND Date >= "{}" AND Date <= "{}" GROUP BY CustomerUsername'.format(customerUsername, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return jsonify("No orders found between these dates")
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['avgPrice'] = str(ordersBetween['avgPrice'])
+      response.append(ordersBetween)
+  return jsonify(response)
+
 # Get orders between for restuarant owner
 @app.route("/getOrdersBetweenRestaurant")
 def getOrdersBetweenRestaurant():
@@ -254,6 +271,22 @@ def getBestSellers():
         response.append(bestItem)
     return jsonify(response)
 
+@app.route("/getAvgOrderRestaurant")
+def getAvgOrderRestaurant():
+  restaurantID = request.args.get('RestaurantID')
+  dateFrom = request.args.get('DateFrom')
+  dateTo = request.args.get('DateTo')
+  query = 'SELECT restaurantID, AVG(Price) As avgPrice FROM project.RestaurantOrder WHERE restaurantID = "{}" AND Date >= "{}" AND Date <= "{}" GROUP BY restaurantID'.format(restaurantID, dateFrom, dateTo)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+      return jsonify("No orders found between these dates")
+  for row in result:
+      print(row)
+      ordersBetween = dict(row)
+      ordersBetween['avgPrice'] = str(ordersBetween['avgPrice'])
+      response.append(ordersBetween)
+  return jsonify(response)
 # ====================================== POST endpoints ====================================
 
 # Given all the fields in a POST form, create a new customer
@@ -332,13 +365,15 @@ def addOrder():
     print(distance)
     tip = restaurant['TipAmount'] #REAL
     status = 'delivered'
-    loc = restaurant['Location']
     user = restaurant['CustomerUsername']
     ccNo = restaurant['CreditCardNumber']
     deliveryName = deliveryPerson['Name']
     deliveryAddress = deliveryPerson['Address']
     restID = restaurant['RestaurantID']
     special = restaurant['SpecialInstructions']
+    # loc = restaurant['Location']
+    loc = 'hehexd'
+    # TODO this needs to query the restaurants using the restID
     query = 'INSERT INTO project.RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)\
             VALUES ("{}", "{}", {}, {}, {}, "{}", "{}", "{}", "{}", "{}", "{}", {}, "{}");'.format(date, time, price, distance, tip, status, loc, user, ccNo, deliveryName, deliveryAddress, restID, special)
     print(query)
