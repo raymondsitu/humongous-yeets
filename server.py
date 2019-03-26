@@ -238,6 +238,22 @@ def getOrdersBetweenRestaurant():
       ordersBetween['Time'] = str(ordersBetween['Time'])
       response.append(ordersBetween)
   return jsonify(response)
+
+# Gets best-selling items for a restaurant
+@app.route("/getBestSellers")
+def getBestSellers():
+    restaurantID = request.args.get('RestaurantID')
+    response = []
+    query = 'SELECT omi.MenuItemID, mi.Name, SUM(omi.Quantity) as Total FROM RestaurantOrder r, OrderedMenuItem omi, MenuItem mi WHERE r.RestaurantID = {} AND omi.OrderID = r.OrderID AND omi.MenuItemID = mi.MenuItemID GROUP BY omi.MenuItemID ORDER BY Total DESC;'.format(restaurantID)
+    result = engine.execute(query)
+    for row in result:
+        bestItem = dict(row)
+        bestItem['Total'] = int(bestItem['Total'])
+        print("--------------------------")
+        print(bestItem)
+        response.append(bestItem)
+    return jsonify(response)
+
 # ====================================== POST endpoints ====================================
 
 # Given all the fields in a POST form, create a new customer
