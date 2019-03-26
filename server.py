@@ -289,8 +289,17 @@ def getBestSellers():
     response.append(bestItem)
   return jsonify(response)
 
-# Gets items
-
+# Gets items that have been ordered by every customer
+@app.route("/getSoldToAll")
+def getSoldToAll():
+  restaurantID = request.args.get('RestaurantID')
+  response = []
+  query = 'SELECT * FROM MenuItem mi WHERE NOT EXISTS (SELECT CustomerUsername FROM Customer c WHERE NOT EXISTS (SELECT * FROM RestaurantOrder ro1, OrderedMenuItem omi WHERE c.CustomerUsername = ro1.CustomerUsername AND ro1.OrderID = omi.OrderID AND omi.MenuItemID = mi.MenuItemID AND ro1.RestaurantID = {}));'.format(restaurantID)
+  result = engine.execute(query)
+  for row in result:
+    soldToAllItem = dict(row)
+    response.append(soldToAllItem)
+  return jsonify(response)
 # ====================================== POST endpoints ====================================
 
 # Given all the fields in a POST form, create a new customer
@@ -379,14 +388,11 @@ def addOrder():
     locResult = engine.execute('SELECT Address FROM Customer WHERE CustomerUsername = "{}";'.format(user))
     locResult = locResult.first()
     locResult = dict(locResult)
-    print('-----------------------------------------------------------------')
-    print(locResult)
     loc = locResult['Address']
-    # TODO this needs to query the restaurants using the restID
     query = 'INSERT INTO project.RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)\
             VALUES ("{}", "{}", {}, {}, {}, "{}", "{}", "{}", "{}", "{}", "{}", {}, "{}");'.format(date, time, price, distance, tip, status, loc, user, ccNo, deliveryName, deliveryAddress, restID, special)
+    print("fake data to add: ========================================================")
     print(query)
-    print(orderedItems)
     try:
         engine.execute(query)
         idResult = engine.execute('SELECT Max(OrderID) FROM RestaurantOrder;')
@@ -397,6 +403,7 @@ def addOrder():
             menuItemID = item['MenuItemID']
             quantity = item['Quantity']
             insertQuery = 'INSERT INTO project.OrderedMenuItem VALUES ({}, {}, {});'.format(orderID, menuItemID, quantity)
+            print("more fake data to add ======================================================")
             print(insertQuery)
             engine.execute(insertQuery)
     except Exception as e:

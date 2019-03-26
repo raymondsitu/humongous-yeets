@@ -186,6 +186,16 @@ INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Loc
 VALUES ("2019-02-18", TIME("11:22"), 24.00, 8, 1.00, "delivered", "2630 West Mall, Vancouver, BC V6T 1Z4", "yli","4321-0987-7654-1234","Spongebob Squarepants", "2153 Pineapple, Bikini Bottom, BC V6T 1Z2", 4);
 INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID)
 VALUES ("2019-02-24", TIME("11:10"), 5.00, 4, 1.00, "order made", "101 5728 University Blvd, Vancouver, BC V6T 1K6", "hughmungus","0808-9797-6565-2323","Patrick Star", "2053 Rock, Bikini Bottom, BC V6T 1Z2", 5);
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)
+VALUES ("2019-03-26", "13:24", 60.5, 15, 20, "delivered", "2829 West Mall, Vancouver, BC V6T 1Z4", "hughmungus", "0808-9797-6565-2323", "Sharpe Velleman", "2053 West Mall, Vancouver, BC V6T 1Z2", 2, "Please cook the salmon");
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)
+VALUES ("2019-03-26", "13:26", 48.25, 10, 100, "delivered", "2330 West Mall, Vancouver, BC V6T 1Z4", "kwong", "1111-9898-7676-5252", "Veaux Hoshin", "2053 South Mall, Vancouver, BC V6T 1Z2", 2, "");
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)
+VALUES ("2019-03-26", "13:27", 52.5, 16, 0, "delivered", "2529 West Mall, Vancouver, BC V6T 1Z4", "mshan", "2222-0000-9999-8888", "Mark Zuckerberg", "2353 East Mall, Vancouver, BC V6T 1Z2", 2, "");
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)
+VALUES ("2019-03-26", "13:30", 93, 6, 0, "delivered", "2329 West Mall, Vancouver, BC V6T 1Z4", "rsitu", "4324-0987-1234-8765", "Elon Musk", "2000 Main Mall, Vancouver, BC V6T 1Z2", 2, "addd");
+INSERT INTO RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)
+VALUES ("2019-03-26", "13:32", 30.25, 4, 0, "delivered", "2629 West Mall, Vancouver, BC V6T 1Z4", "yli", "4321-0987-7654-1234", "Jeff Bezos", "2022 West Mall, Vancouver, BC V6T 1Z2", 2, "");
 
 INSERT INTO `MenuItem` VALUES (1,'Big Mac',1,3.99,509,'Two 100 percent beef patties'),
 (2,'Salmon Sashimi',2,22.25,500,'fresh fish'),
@@ -242,4 +252,15 @@ INSERT INTO OrderedMenuItem VALUES (2, 2, 1);
 INSERT INTO OrderedMenuItem VALUES (3, 3, 1);
 INSERT INTO OrderedMenuItem VALUES (4, 4, 2);
 INSERT INTO OrderedMenuItem VALUES (5, 5, 1);
+INSERT INTO OrderedMenuItem VALUES (8, 2, 2);
+INSERT INTO OrderedMenuItem VALUES (8, 16, 4);
+INSERT INTO OrderedMenuItem VALUES (9, 2, 1);
+INSERT INTO OrderedMenuItem VALUES (9, 16, 2);
+INSERT INTO OrderedMenuItem VALUES (9, 19, 1);
+INSERT INTO OrderedMenuItem VALUES (10, 2, 2);
+INSERT INTO OrderedMenuItem VALUES (10, 16, 2);
+INSERT INTO OrderedMenuItem VALUES (11, 2, 4);
+INSERT INTO OrderedMenuItem VALUES (11, 16, 1);
+INSERT INTO OrderedMenuItem VALUES (12, 2, 1);
+INSERT INTO OrderedMenuItem VALUES (12, 16, 2);
 
