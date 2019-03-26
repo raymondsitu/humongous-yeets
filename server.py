@@ -3,6 +3,7 @@ from flask_cors import CORS
 from sqlalchemy import *
 from datetime import datetime
 import random
+from decimal import Decimal
 
 app = Flask(__name__)
 CORS(app)
@@ -233,7 +234,7 @@ def getAvgOrder():
   for row in result:
       print(row)
       ordersBetween = dict(row)
-      ordersBetween['avgPrice'] = str(ordersBetween['avgPrice'])
+      ordersBetween['avgPrice'] = str(Decimal(ordersBetween['avgPrice']).quantize(Decimal("0.01")))
       response.append(ordersBetween)
   return jsonify(response)
 
@@ -269,7 +270,7 @@ def getAvgOrderRestaurant():
   for row in result:
       print(row)
       ordersBetween = dict(row)
-      ordersBetween['avgPrice'] = str(ordersBetween['avgPrice'])
+      ordersBetween['avgPrice'] = str(Decimal(ordersBetween['avgPrice']).quantize(Decimal("0.01")))
       response.append(ordersBetween)
   return jsonify(response)
 
