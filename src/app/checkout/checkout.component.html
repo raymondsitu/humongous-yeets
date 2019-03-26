@@ -63,6 +63,19 @@
     <br>
     Final cost: {{getFinalCost() | currency}}
   </div>
+
+  <div>
+    <h4>Select Credit Card</h4>
+    <mat-form-field>
+      <mat-select [(value)]="selectedCard">
+        <mat-option *ngFor="let card of cards" [value]="card.CreditCardNumber">
+          {{card.CreditCardNumber}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!--<p>You selected: {{selectedCard}}</p>-->
+  </div>
+
   <div class="checkout" style="padding-top: 15px">
     <button mat-raised-button class="checkout-button" style="margin-right: 10px;" (click)="checkout()">
       <mat-icon style="margin-right: 3px;">cake</mat-icon>

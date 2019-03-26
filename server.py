@@ -316,13 +316,15 @@ def addOrder():
     print(distance)
     tip = restaurant['TipAmount'] #REAL
     status = 'delivered'
-    loc = restaurant['Location']
     user = restaurant['CustomerUsername']
     ccNo = restaurant['CreditCardNumber']
     deliveryName = deliveryPerson['Name']
     deliveryAddress = deliveryPerson['Address']
     restID = restaurant['RestaurantID']
     special = restaurant['SpecialInstructions']
+    # loc = restaurant['Location']
+    loc = 'hehexd'
+    # TODO this needs to query the restaurants using the restID
     query = 'INSERT INTO project.RestaurantOrder (Date, Time, Price, Distance, TipAmount, Status, Location, CustomerUsername, CreditCardNumber, DeliveryPersonName, DeliveryPersonAddress, RestaurantID, SpecialInstructions)\
             VALUES ("{}", "{}", {}, {}, {}, "{}", "{}", "{}", "{}", "{}", "{}", {}, "{}");'.format(date, time, price, distance, tip, status, loc, user, ccNo, deliveryName, deliveryAddress, restID, special)
     print(query)
