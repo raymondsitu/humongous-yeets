@@ -74,7 +74,7 @@ export class CartService {
     info['CustomerUsername'] = user;
     info['RestaurantID'] = this.currentRestaurant;
     info['SpecialInstructions'] = instructions;
-    // console.log(card);
+    console.log(card);
     info['CreditCardNumber'] = card;
     const body: any = {RestaurantOrderedFrom: info, OrderedItems: orderedItems};
     this.http.postRequest('/addOrder', body)

@@ -6,13 +6,6 @@
            [(ngModel)]="restaurantName" name="restaurantName"
            style="font-size:18px;">
   </mat-form-field>
-  <div>
-    <mat-checkbox class="check" (change)="getRestaurants()" [(ngModel)]="col1">Name</mat-checkbox>
-    <mat-checkbox class="check" (change)="getRestaurants()" [(ngModel)]="col2">Location</mat-checkbox>
-    <mat-checkbox class="check" (change)="getRestaurants()" [(ngModel)]="col3">Category</mat-checkbox>
-    <mat-checkbox class="check" (change)="getRestaurants()" [(ngModel)]="col4">Rating</mat-checkbox>
-    <mat-checkbox class="check" (change)="getRestaurants()" [(ngModel)]="col5">Delivery Fee</mat-checkbox>
-  </div>
   <mat-table [dataSource]="restaurants" matSort matSortActive="Rating" matSortDirection="desc">
     <ng-container matColumnDef="Name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
@@ -46,3 +39,4 @@
 <div *ngIf="restaurantSelected">
   <app-menu [restaurantID]="selectedRestaurantID" [deliveryFee]="deliveryFee" (onBack)="disableMenu()"></app-menu>
 </div>
+
