@@ -68,9 +68,8 @@ def getRestaurants():
     query = 'SELECT '
     for value in params[:-1]:
         query = query + value + ', '
-        print("Value: ")
-        print(query)
     query = query + params[-1] + ' FROM project.Restaurant'
+    print(query)
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
