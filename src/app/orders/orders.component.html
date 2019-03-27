@@ -32,8 +32,36 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="selectOrder(row.OrderID)"></mat-row>
   </mat-table>
+
+  <mat-card id="orderDetails" *ngIf="orderSelected">
+    <mat-card-title>Order Details</mat-card-title>
+    <mat-table id="orderDetailsTable" [dataSource]="orderedItems">
+      <ng-container matColumnDef="Name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Name }}</mat-cell>
+        <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Quantity">
+        <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Quantity }}</mat-cell>
+        <mat-footer-cell *matFooterCellDef>{{ getTotalQuantityOfOrder() }}</mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Price">
+        <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.Price * row.Quantity | currency }}</mat-cell>
+        <mat-footer-cell *matFooterCellDef>{{ getTotalCostOfOrder() | currency }}</mat-footer-cell>
+
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="orderedMenuItemsColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: orderedMenuItemsColumns"></mat-row>
+      <mat-footer-row *matFooterRowDef="orderedMenuItemsColumns"></mat-footer-row>
+    </mat-table>
+  </mat-card>
 
 
     <div id="myAccount">

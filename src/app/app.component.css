@@ -25,6 +25,10 @@ h1 {
   padding: 1%;
 }
 
+.mat-footer-cell {
+  padding: 1%;
+}
+
 .mat-button, .mat-raised-button, .login-button {
   background-color: royalblue;
   color: white;

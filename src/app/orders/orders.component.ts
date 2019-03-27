@@ -18,11 +18,14 @@ export class OrdersComponent implements OnInit {
   user: any;
   username: string;
   orders: MatTableDataSource<any>;
+  orderedItems: MatTableDataSource<any>;
   displayedColumns = ['Date', 'OrderID', 'Status', 'DeliveryPersonName', 'Price'];
+  orderedMenuItemsColumns = ['Name', 'Quantity', 'Price'];
   selected: {startDate: Moment, endDate: Moment};
   startDate: string;
   endDate:string;
   PriceAvg: string = "0";
+  orderSelected: number;
 
   constructor(private http: HttpService,private userService: UserService) {
   }
@@ -71,13 +74,41 @@ export class OrdersComponent implements OnInit {
     }).catch((response) => {
       alert('No restaurants found');
     });
-
     }
+    }
+  }
 
-    
+  selectOrder(orderID) {
+    let numberOrderID = Number(orderID);
+    if (numberOrderID == this.orderSelected) {
+      this.orderSelected = undefined;
+    } else {
+      this.orderSelected = numberOrderID;
+      this.http.getRequest('/getMenuItemsPerOrder', {OrderID: numberOrderID}).then((menuItems) => {
+        this.orderedItems = new MatTableDataSource(menuItems);
+      }).catch(() => {
+        alert('No menu items found for order');
+      });
+    }
+  }
 
+  getTotalCostOfOrder() {
+    if (this.orderSelected) {
+      let sum: number = 0;
+      for (let item of this.orderedItems.data) {
+        sum += item['Price'] * item['Quantity']
+      }
+      return sum;
+    }
+  }
 
-
+  getTotalQuantityOfOrder() {
+    if (this.orderSelected) {
+      let sum: number = 0;
+      for (let item of this.orderedItems.data) {
+        sum += item['Quantity']
+      }
+      return sum;
     }
   }
 
