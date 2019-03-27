@@ -202,6 +202,20 @@ def getMOrderedenuItems():
         response.append(orderedMenuItem)
     return jsonify(response)
 
+# Get all ordered menu items from the DB
+@app.route("/getMenuItemsPerOrder")
+def getMenuItemsPerOrder():
+  orderID = request.args.get('OrderID')
+  query = 'SELECT mi.Name, omi.Quantity, mi.Price FROM project.MenuItem mi, project.OrderedMenuItem omi WHERE mi.MenuItemID = omi.MenuItemID AND omi.OrderID = {};'.format(orderID)
+  response = []
+  result = engine.execute(query)
+  if result.rowcount == 0:
+    return jsonify("No ordered menu items found")
+  for row in result:
+    orderedMenuItem = dict(row)
+    response.append(orderedMenuItem)
+  return jsonify(response)
+
 # Get array of all menu categories that belong ot this specific menu
 @app.route("/getOrdersBetween")
 def getOrdersBetween():
