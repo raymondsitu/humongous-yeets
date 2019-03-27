@@ -17,16 +17,18 @@ export class BrowseComponent implements OnInit {
   restaurantSelected = false;
   selectedRestaurantID = undefined;
   deliveryFee = null;
+  col1 = true;
+  col2 = true;
+  col3 = true;
+  col4 = true;
+  col5 = true;
 
   constructor(private http: HttpService) {
-    http.getRequest('/getRestaurants', {}).then((restaurants) => {
-      this.restaurants = new MatTableDataSource(restaurants);
-      this.restaurants.sort = this.sort;
-    });
+    this.getRestaurants();
   }
 
   searchRestaurants(): void {
-    this.http.getRequest('/getRestaurantsFiltered', {Name: this.restaurantName}).then((restaurants) => {
+    this.http.getRequest('/getRestaurantsFiltered', {Name: this.restaurantName, selected: this.displayedColumns}).then((restaurants) => {
       this.restaurants = new MatTableDataSource(restaurants);
       this.restaurants.sort = this.sort;
     }).catch((response) => {
@@ -46,6 +48,33 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
 
+  getRestaurants() {
+    this.updateCols();
+    this.http.getRequest('/getRestaurants', {selected: this.displayedColumns}).then((restaurants) => {
+      this.restaurants = new MatTableDataSource(restaurants);
+      this.restaurants.sort = this.sort;
+    });
+  }
+
+  updateCols() {
+    let result = [];
+    if (this.col1 === true) {
+      result.push('Name');
+    }
+    if (this.col2 === true) {
+      result.push('Location');
+    }
+    if (this.col3 === true) {
+      result.push('Category');
+    }
+    if (this.col4 === true) {
+      result.push('Rating');
+    }
+    if (this.col5 === true) {
+      result.push('DeliveryFee');
+    }
+    this.displayedColumns = result;
   }
 }
