@@ -21,6 +21,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import {CartService} from './cart.service';
 import {UserService} from './user.service';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     MatBadgeModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     NgxDaterangepickerMd.forRoot()
   ],
   providers: [CartService,
