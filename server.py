@@ -64,7 +64,12 @@ def login():
 # Returns all restaurants in the DB
 @app.route("/getRestaurants")
 def getRestaurants():
-    query = 'SELECT * FROM project.Restaurant'
+    params = request.args.getlist('selected')
+    query = 'SELECT '
+    for value in params[:-1]:
+        query = query + value + ', '
+    query = query + params[-1] + ' FROM project.Restaurant'
+    print(query)
     response = []
     result = engine.execute(query)
     if result.rowcount == 0:
