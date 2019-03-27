@@ -218,7 +218,7 @@ def getMOrderedenuItems():
 @app.route("/getMenuItemsPerOrder")
 def getMenuItemsPerOrder():
   orderID = request.args.get('OrderID')
-  query = 'SELECT mi.Name, omi.Quantity, mi.Price FROM project.MenuItem mi, project.OrderedMenuItem omi WHERE mi.MenuItemID = omi.MenuItemID AND omi.OrderID = {};'.format(orderID)
+  query = 'SELECT mi.Name, omi.Quantity, mi.Price, ro.Price AS OrderPrice FROM project.MenuItem mi, project.OrderedMenuItem omi, project.RestaurantOrder ro WHERE mi.MenuItemID = omi.MenuItemID AND omi.OrderID = ro.OrderID AND omi.OrderID = {};'.format(orderID)
   response = []
   result = engine.execute(query)
   if result.rowcount == 0:
