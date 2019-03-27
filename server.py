@@ -83,7 +83,14 @@ def getRestaurants():
 @app.route("/getRestaurantsFiltered")
 def getRestaurantsFiltered():
     restaurantName = request.args.get('Name')
-    query = "SELECT * FROM project.Restaurant WHERE Name LIKE '%%{}%%'".format(restaurantName)
+    params = request.args.getlist('selected')
+    query = 'SELECT RestaurantID, '
+    for value in params[:-1]:
+        query = query + value + ', '
+    query = query + params[-1]
+    querytemp = " FROM project.Restaurant WHERE Name LIKE '%%{}%%'".format(restaurantName)
+    query = query + querytemp
+    print(query)
     response = []
     try:
         result = engine.execute(query)
