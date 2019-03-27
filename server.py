@@ -65,7 +65,7 @@ def login():
 @app.route("/getRestaurants")
 def getRestaurants():
     params = request.args.getlist('selected')
-    query = 'SELECT '
+    query = 'SELECT RestaurantID, '
     for value in params[:-1]:
         query = query + value + ', '
     query = query + params[-1] + ' FROM project.Restaurant'
