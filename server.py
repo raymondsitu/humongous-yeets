@@ -305,7 +305,7 @@ def getAvgOrderRestaurant():
 def getBestSellers():
   restaurantID = request.args.get('RestaurantID')
   response = []
-  query = 'SELECT omi.MenuItemID, mi.Name, SUM(omi.Quantity) as Total FROM RestaurantOrder r, OrderedMenuItem omi, MenuItem mi WHERE r.RestaurantID = {} AND omi.OrderID = r.OrderID AND omi.MenuItemID = mi.MenuItemID GROUP BY omi.MenuItemID ORDER BY Total DESC;'.format(restaurantID)
+  query = 'SELECT omi.MenuItemID, mi.Name, SUM(omi.Quantity) as Total FROM project.RestaurantOrder r, project.OrderedMenuItem omi, project.MenuItem mi WHERE r.RestaurantID = {} AND omi.OrderID = r.OrderID AND omi.MenuItemID = mi.MenuItemID GROUP BY omi.MenuItemID ORDER BY Total DESC;'.format(restaurantID)
   result = engine.execute(query)
   for row in result:
     bestItem = dict(row)
@@ -320,7 +320,7 @@ def getBestSellers():
 def getSoldToAll():
   restaurantID = request.args.get('RestaurantID')
   response = []
-  query = 'SELECT * FROM MenuItem mi WHERE NOT EXISTS (SELECT CustomerUsername FROM Customer c WHERE NOT EXISTS (SELECT * FROM RestaurantOrder ro1, OrderedMenuItem omi WHERE c.CustomerUsername = ro1.CustomerUsername AND ro1.OrderID = omi.OrderID AND omi.MenuItemID = mi.MenuItemID AND ro1.RestaurantID = {}));'.format(restaurantID)
+  query = 'SELECT * FROM project.MenuItem mi WHERE NOT EXISTS (SELECT CustomerUsername FROM project.Customer c WHERE NOT EXISTS (SELECT * FROM project.RestaurantOrder ro1, project.OrderedMenuItem omi WHERE c.CustomerUsername = ro1.CustomerUsername AND ro1.OrderID = omi.OrderID AND omi.MenuItemID = mi.MenuItemID AND ro1.RestaurantID = {}));'.format(restaurantID)
   result = engine.execute(query)
   for row in result:
     soldToAllItem = dict(row)
@@ -411,7 +411,7 @@ def addOrder():
     restID = restaurant['RestaurantID']
     special = restaurant['SpecialInstructions']
     # loc = restaurant['Location']
-    locResult = engine.execute('SELECT Address FROM Customer WHERE CustomerUsername = "{}";'.format(user))
+    locResult = engine.execute('SELECT Address FROM project.Customer WHERE CustomerUsername = "{}";'.format(user))
     locResult = locResult.first()
     locResult = dict(locResult)
     loc = locResult['Address']
@@ -421,7 +421,7 @@ def addOrder():
     print(query)
     try:
         engine.execute(query)
-        idResult = engine.execute('SELECT Max(OrderID) FROM RestaurantOrder;')
+        idResult = engine.execute('SELECT Max(OrderID) FROM project.RestaurantOrder;')
         idResult = idResult.first()
         idResult = dict(idResult)
         orderID = idResult['Max(OrderID)']
