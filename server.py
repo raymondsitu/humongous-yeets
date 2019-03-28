@@ -91,51 +91,6 @@ def getRestaurantsFiltered():
         print(e)
         return jsonify("Exception thrown")
 
-# Given the restaurant ID, get a single restaurant (wrapped in an array)
-@app.route("/getRestaurant")
-def getRestaurant():
-    try:
-        restaurantID = request.args.get('RestaurantID')
-        query = 'SELECT * FROM project.Restaurant WHERE RestaurantID = {}'.format(restaurantID)
-        response = []
-        result = engine.execute(query)
-        if result.rowcount == 0:
-            return jsonify("No restaurant found")
-        row = result.first()
-        restaurant = dict(row)
-        response.append(restaurant)
-        return jsonify(response)
-    except Exception as e:
-        print(e)
-        return jsonify("Exception thrown")
-
-# Get all restaurant orders in the DB
-@app.route("/getRestaurantOrders")
-def getRestaurantOrders():
-    query = 'SELECT * FROM project.RestaurantOrder'
-    response = []
-    result = engine.execute(query)
-    if result.rowcount == 0:
-        return jsonify("No restaurant orders found")
-    for row in result:
-        restaurantOrder = dict(row)
-        restaurantOrder['Time'] = str(restaurantOrder['Time'])
-        response.append(restaurantOrder)
-    return jsonify(response)
-
-# Get all restaurant menus in  the DB
-@app.route("/getMenus")
-def getMenus():
-    query = 'SELECT * FROM project.Menu'
-    response = []
-    result = engine.execute(query)
-    if result.rowcount == 0:
-        return jsonify("No menus found")
-    for row in result:
-        menu = dict(row)
-        response.append(menu)
-    return jsonify(response)
-
 # Get all credit cards that belong to customer in the DB
 @app.route("/getCreditCards")
 def getCreditCards():
@@ -174,32 +129,6 @@ def getMenu():
     return jsonify(response)
   except Exception as e:
       return jsonify("Exception thrown")
-
-# Get all menu items in the DB
-@app.route("/getMenuItems")
-def getMenuItems():
-    query = 'SELECT * FROM project.MenuItem'
-    response = []
-    result = engine.execute(query)
-    if result.rowcount == 0:
-        return jsonify("No menu items found")
-    for row in result:
-        menuItem = dict(row)
-        response.append(menuItem)
-    return jsonify(response)
-
-# Get all ordered menu items from the DB
-@app.route("/getOrderedMenuItems")
-def getMOrderedenuItems():
-    query = 'SELECT * FROM project.OrderedMenuItem'
-    response = []
-    result = engine.execute(query)
-    if result.rowcount == 0:
-        return jsonify("No ordered menu items found")
-    for row in result:
-        orderedMenuItem = dict(row)
-        response.append(orderedMenuItem)
-    return jsonify(response)
 
 # Get all ordered menu items from the DB
 @app.route("/getMenuItemsPerOrder")
