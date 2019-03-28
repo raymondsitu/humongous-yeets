@@ -28,6 +28,7 @@ export class OrdersComponent implements OnInit {
   orderSelected: number;
   soldToAll: [];
   bestsellers: [];
+  isResturant: boolean;
 
   constructor(private http: HttpService,private userService: UserService) {
   }
@@ -77,19 +78,7 @@ export class OrdersComponent implements OnInit {
       alert('No restaurants found');
     });
 
-     this.http.getRequest('/getSoldToAll', {RestaurantID: this.username}).then((items) => {
-      this.soldToAll = items;
-      
-    }).catch((response) => {
-      alert('No sold to all found');
-    });
 
-    this.http.getRequest('/getBestSellers', {RestaurantID: this.username}).then((items) => {
-      this.bestsellers = items;
-      
-    }).catch((response) => {
-      alert('No sold to all found');
-    });
 
     
 
@@ -160,10 +149,29 @@ export class OrdersComponent implements OnInit {
       this.user = this.userService.getUser();
       console.log("this.user", this.user);
       if (this.usertype === 'customer') {
+      this.isResturant = false;
         this.username = this.user['CustomerUsername'];
       } else {
         this.username = this.user['RestaurantID'];
       }
+    }
+
+    if(this.usertype === 'restaurant'){
+    this.isResturant = true;
+
+         this.http.getRequest('/getSoldToAll', {RestaurantID: this.username}).then((items) => {
+      this.soldToAll = items;
+      
+    }).catch((response) => {
+      alert('No sold to all found');
+    });
+
+    this.http.getRequest('/getBestSellers', {RestaurantID: this.username}).then((items) => {
+      this.bestsellers = items;
+      
+    }).catch((response) => {
+      alert('No sold to all found');
+    });
     }
   }
 }

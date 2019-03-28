@@ -67,9 +67,9 @@
     <div id="myAccount">
       <mat-card id="mySummaryCard" >
         <mat-card-title>Summary</mat-card-title>
-        <mat-card-subtitle>Avgerage Price: ${{PriceAvg}}</mat-card-subtitle>
-        <mat-card-subtitle>Items sold to all: {{getSoldByAll()}}</mat-card-subtitle>
-        <mat-card-subtitle>Best Sellers: {{getBestSellers()}}</mat-card-subtitle>
+        <mat-card-subtitle>Average price from specified date range: ${{PriceAvg}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="isResturant">Items bought by every customer: {{getSoldByAll()}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="isResturant">Best Sellers: {{getBestSellers()}}</mat-card-subtitle>
       </mat-card>
 </div>
 </div>
