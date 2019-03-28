@@ -96,7 +96,7 @@ FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
 create table Menu (
 	MenuID integer AUTO_INCREMENT,
 	Name char(30),
-	RestaurantID integer NOT NULL,
+	RestaurantID integer NOT NULL UNIQUE,
 	PRIMARY KEY (MenuID),
 FOREIGN KEY (RestaurantID) REFERENCES 	Restaurant(RestaurantID)
 );
