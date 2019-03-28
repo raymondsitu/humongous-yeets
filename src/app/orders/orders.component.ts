@@ -26,6 +26,8 @@ export class OrdersComponent implements OnInit {
   endDate:string;
   PriceAvg: string = "0";
   orderSelected: number;
+  soldToAll: [];
+  bestsellers: [];
 
   constructor(private http: HttpService,private userService: UserService) {
   }
@@ -74,6 +76,23 @@ export class OrdersComponent implements OnInit {
     }).catch((response) => {
       alert('No restaurants found');
     });
+
+     this.http.getRequest('/getSoldToAll', {RestaurantID: this.username}).then((items) => {
+      this.soldToAll = items;
+      
+    }).catch((response) => {
+      alert('No sold to all found');
+    });
+
+    this.http.getRequest('/getBestSellers', {RestaurantID: this.username}).then((items) => {
+      this.bestsellers = items;
+      
+    }).catch((response) => {
+      alert('No sold to all found');
+    });
+
+    
+
     }
     }
   }
@@ -110,6 +129,29 @@ export class OrdersComponent implements OnInit {
       }
       return sum;
     }
+  }
+
+  getSoldByAll(){
+  
+  if(this.soldToAll){
+  let lst: string = "";
+  this.soldToAll.forEach(function(item) {
+  lst = lst.concat(item['Name'] , ', ');
+  });
+  return lst;
+  }
+  
+  }
+
+    getBestSellers(){
+    if(this.bestsellers){
+  let lst: string = "";
+  this.bestsellers.forEach(function(item) {
+  lst = lst.concat(item['Name'] , ', ');
+  });
+  return lst;
+  }
+  
   }
 
   ngOnInit() {
