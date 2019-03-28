@@ -17,19 +17,6 @@ print('db set!')
 def hello():
     return jsonify({"response": "poggers"})
 
-# Returns all customers in the DB
-@app.route("/getCustomers")
-def getCustomers():
-    query = 'SELECT * FROM project.Customer;'
-    response = []
-    result = engine.execute(query)
-    if result.rowcount == 0:
-        return jsonify("No customers found")
-    for row in result:
-        customer = dict(row)
-        response.append(customer)
-    return jsonify(response)
-
 # Given a username and password as arguments in a get request, gets a single customer object
 @app.route("/login")
 def login():
@@ -328,38 +315,6 @@ def getSoldToAll():
   return jsonify(response)
 # ====================================== POST endpoints ====================================
 
-# Given all the fields in a POST form, create a new customer
-@app.route("/addCustomer", methods=["POST"])
-def addCustomer():
-    params = request.get_json()
-    customerUsername = params['CustomerUsername']
-    customerPassword = params['CustomerPassword']
-    emailAddress = params['EmailAddress']
-    phoneNumber = params['PhoneNumber']
-    address = params['Address']
-    query = 'INSERT INTO project.Customer VALUES ("{}", "{}", "{}", "{}", "{}");'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address)
-    try:
-        result = engine.execute(query)
-    except Exception as e:
-        return jsonify("addCustomer: Error in backend database")
-    return jsonify('Successfully added {} {} {} {} {}'.format(customerUsername, customerPassword, emailAddress, phoneNumber, address))
-
-# Create a credit card
-@app.route("/addCreditCard", methods=["POST"])
-def addCreditCard():
-    params = request.get_json()
-    ccNo = params['CreditCardNumber']
-    bAdd = params['BillingAddress']
-    dExp = params['DateExpire']
-    name = params['NameOnCard']
-    cusUser = params['CustomerUsername']
-    query = 'INSERT INTO project.CreditCard VALUES ("{}", "{}", "{}", "{}", "{}")'.format(ccNo, bAdd, dExp, name, cusUser)
-    try:
-        result = engine.execute(query)
-    except Exception as e:
-        return jsonify("addMenuItem: Error in backend database")
-    return jsonify('Successfully added {} {} {} {} {})'.format(ccNo, bAdd, dExp, name, cusUser))
-
 # Creates a MenuItem
 @app.route("/addMenuItem", methods=["POST"])
 def addMenuItem():
@@ -491,21 +446,6 @@ def updateMenuItem():
         return jsonify("updateMenuItem: Error in backend database")
     return jsonify('Successfully updated MenuItem {} with {} {} {} {} {}'.format(menuItemID, name, menuID, price, calories, description))
 
-# Update credit card
-@app.route("/updateCreditCard", methods=["PUT"])
-def updateCreditCard():
-    params = request.get_json()
-    ccNo = params['CreditCardNumber']
-    bAdd = params['BillingAddress']
-    dExp = params['DateExpire']
-    name = params['NameOnCard']
-    cusUser = params['CustomerUsername']
-    query = 'UPDATE project.CreditCard SET BillingAddress = "{}", DateExpire = "{}", NameOnCard = "{}", CustomerUsername = "{}" WHERE CreditCardNumber = "{}";'.format(bAdd, dExp, name, cusUser, ccNo)
-    try:
-        result = engine.execute(query)
-    except Exception as e:
-        return jsonify("updateCreditCard: Error in backend database")
-    return jsonify('Successfully updated Credit Card {} with {} {} {} {}'.format(ccNo, bAdd, dExp, name, cusUser))
 
 # Delete menu item
 @app.route("/deleteMenuItem", methods=["DELETE"])
