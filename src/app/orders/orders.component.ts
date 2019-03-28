@@ -136,7 +136,7 @@ export class OrdersComponent implements OnInit {
     if(this.bestsellers){
   let lst: string = "";
   this.bestsellers.forEach(function(item) {
-  lst = lst.concat(item['Name'] , ', ');
+  lst = lst.concat(item['Name'] , '(', item['Total'], ')',', ');
   });
   return lst;
   }
